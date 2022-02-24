@@ -100,6 +100,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "leaner:build:production",
+            "firebaseProject": "leaner-205b3",
+            "firebaseHostingSite": "leaner-205b3"
+          }
         }
       }
     }

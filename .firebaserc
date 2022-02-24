@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "leaner-205b3": {
+      "hosting": {
+        "leaner": [
+          "leaner-205b3"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "leaner-205b3"
+  }
+}
