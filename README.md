@@ -4,6 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Authors
 Conor J. Newcombe
+Julia Ashley-Smith
 
 ## Development server
 
