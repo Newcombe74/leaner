@@ -3,10 +3,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
+import { MatButtonModule } from '@angular/material/button';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [NavbarComponent],
-  imports: [MatToolbarModule, MatIconModule],
+  imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule],
   providers: [],
   exports: [NavbarComponent],
   bootstrap: [NavbarComponent],
