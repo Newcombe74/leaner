@@ -11,8 +11,6 @@ import { slideInAnimation } from './shared/animations';
   ]
 })
 export class AppComponent {
-  title = 'leaner';
-
   constructor(private contexts: ChildrenOutletContexts) {}
 
   getRouteAnimationData() {
