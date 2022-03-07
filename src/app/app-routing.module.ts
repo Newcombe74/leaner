@@ -4,11 +4,11 @@ import { PageNotFoundComponent } from './core/components/page-not-found/pagenotf
 import { HomeComponent } from './features/home/home.component';
   
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: HomeComponent},
   
     //Wild Card Route for 404 request
     { path: '**', pathMatch: 'full', 
-        component: PageNotFoundComponent },
+        component: PageNotFoundComponent},
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
