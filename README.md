@@ -3,7 +3,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.
 
 ## Authors
-Julia Ashley-Smith, Conor J. Newcombe, Toklir Sadiku
+Julia Ashley-Smith, Conor J. Newcombe, Toklir Sadiku, Jordan Kyle
 
 ## Development server
 
