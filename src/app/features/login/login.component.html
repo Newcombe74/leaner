@@ -1,0 +1,15 @@
+<h1>Login</h1>
+<div class="container">
+    <mat-form-field appearance="fill">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput placeholder="password" [formControl]="password" required>
+    </mat-form-field>
+    <button mat-raised-button color="accent">Register</button>
+    <button mat-raised-button color="primary">Login</button>
+    
+</div>

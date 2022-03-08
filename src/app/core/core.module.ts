@@ -6,12 +6,15 @@ import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from '../app-routing.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [NavbarComponent],
-  imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule],
+  imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule],
+  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule],
   providers: [],
-  exports: [NavbarComponent],
   bootstrap: [NavbarComponent],
 })
 export class CoreModule {
