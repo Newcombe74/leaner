@@ -5,10 +5,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { throwIfAlreadyLoaded } from './guards/module-import-guard';
 import { MatButtonModule } from '@angular/material/button';
 import { AppRoutingModule } from '../app-routing.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [NavbarComponent],
-  imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule],
+  imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule],
   providers: [],
   exports: [NavbarComponent],
   bootstrap: [NavbarComponent],

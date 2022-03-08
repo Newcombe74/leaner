@@ -1,10 +1,15 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>LeanER</span>
+    <span><a routerLink="/"><img class="nav-logo" src="../../../../assets/leaner-logo.png" alt="LeanER Logo"></a></span>
     <span class="spacer"></span>
-    <button mat-icon-button aria-label="Info" routerLink="/about">
+    <button class="nav-button" mat-flat-button color="primary">Login</button>
+    <button class="nav-button" mat-flat-button color="primary">My Account</button>
+    <button class="nav-button" mat-icon-button matTooltip="Resources" aria-label="Resources" routerLink="/resources">
+      <mat-icon>help</mat-icon>
+    </button>
+    <button class="nav-button" mat-icon-button matTooltip="About" aria-label="Info" routerLink="/about">
       <mat-icon>info</mat-icon>
     </button>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Example user verified icon">verified_user</mat-icon>
+    <a class="nav-button" href="tel:+17822347192"><button mat-flat-button color="warn">Emergency 911</button></a>
   </mat-toolbar-row>
 </mat-toolbar>
