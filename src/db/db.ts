@@ -4,6 +4,16 @@ export interface User {
   id?: number;
   firstName: string;
   lastName: string;
+  dob: Date;
+  sex: number;
+  email: string;
+  password: string;
+  phoneNumber: string;
+  addressLineOne: string;
+  addressLineTwo: string;
+  postcode: string;
+  emergencyFullName: string;
+  emergencyPhoneNumber: string;
 }
 export interface WaitRequest {
   id?: number;
@@ -105,6 +115,16 @@ export class AppDB extends Dexie {
     const userId = await db.users.add({
       firstName: 'John',
       lastName: 'Smith',
+      dob: new Date(),
+      sex: 0,
+      email: 'jsmith@dal.ca',
+      password: 'password',
+      phoneNumber: '123456789',
+      addressLineOne: '208-1078 Tower Road',
+      addressLineTwo: 'Halifax',
+      postcode: 'B3H 2Y5',
+      emergencyFullName: 'Mary',
+      emergencyPhoneNumber: '987654321'
     });
 
     // Create wait request
