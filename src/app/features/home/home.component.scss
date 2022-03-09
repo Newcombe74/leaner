@@ -16,3 +16,11 @@ p {
 #col-2 {
     width: 50%;
 }
+
+.container{
+    display: flex;
+	width:  100%;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+}
