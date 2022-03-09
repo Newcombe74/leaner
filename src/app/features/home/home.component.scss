@@ -1,20 +1,27 @@
 h1 {
-    color: #273c75;
-    font: bold 6em Arial, sans-serif;
-    padding: 1em;
+    color: #162B66;
+    font: bold 6em Helvetica, sans-serif;
+    padding-top: 15%;
     padding-left: 0.5em;
     padding-bottom: 0;
 }
 
 p {
-    color: #153D70;
-    font: bold 1.5em Arial, sans-serif;
-    padding-left: 2em;
+    color: #404FCC;
+    font: bold 1.5em Helvetica, sans-serif;
+    padding-top: 0.5em;
+    padding-left: 2.5em;
+    width: 60%;
+    font-weight: 300;
 }
 
-#col-1,
+#col-1 {
+    width: 60%;
+}
+
 #col-2 {
-    width: 50%;
+    width: 40%;
+    padding-top: 5%;
 }
 
 .container{
