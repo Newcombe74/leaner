@@ -1,43 +1,53 @@
 h1 {
-    color: #162B66;
-    font: bold 6em Helvetica, sans-serif;
-    padding-top: 15%;
-    padding-left: 0.5em;
-    padding-bottom: 0;
+  color: #162b66;
+  font: bold 6em Helvetica, sans-serif;
+  padding-top: 15%;
+  padding-left: 0.5em;
+  padding-bottom: 0;
 }
 
 p {
-    color: #404FCC;
-    font: bold 1.5em Helvetica, sans-serif;
-    padding-top: 0.5em;
-    padding-left: 2.5em;
-    width: 60%;
-    font-weight: 300;
+  color: #404fcc;
+  font: bold 1.5em Helvetica, sans-serif;
+  padding-top: 0.5em;
+  padding-left: 2.5em;
+  width: 60%;
+  font-weight: 300;
 }
 
 #col-1 {
-    width: 50%;
+  width: 50%;
+  z-index: 5;
 }
 
 #col-2 {
-    width: 50%;
+  width: 50%;
 }
 
-.container{
-    display: flex;
-	width:  100%;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: stretch;
-    position: relative;
+.container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  position: relative;
+  //border: solid red;
 }
 
-.home-logo{
-    max-width: 100%;
+.home-logo {
+  display: flex;
+  max-width: 100%;
+  z-index: 1;
 }
 
 .get-started-button {
-    padding-left: 4em;
-    padding-top: 1em;
+  padding-left: 0.45em;
+  padding-top: 0.09em;
+  width: 6em;
+  margin-left: 0.9em;
+  height: 2.25em;
+  font-weight: 575;
+  font-size: 4em;
+  text-align: justify;
+  //border: solid red;
 }
-
