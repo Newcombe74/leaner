@@ -11,11 +11,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [NavbarComponent],
   imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule],
-  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule],
+  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule, MatDatepickerModule],
   providers: [],
   bootstrap: [NavbarComponent],
 })
