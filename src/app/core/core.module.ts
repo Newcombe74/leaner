@@ -10,11 +10,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [NavbarComponent],
   imports: [AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule],
-  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule],
+  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule],
   providers: [],
   bootstrap: [NavbarComponent],
 })
