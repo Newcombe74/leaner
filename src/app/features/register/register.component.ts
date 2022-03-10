@@ -7,25 +7,32 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  firstFormGroup!: FormGroup;
-  secondFormGroup!: FormGroup;
-  thirdFormGroup!: FormGroup;
-  fourthFormGroup!: FormGroup;
+  personalInfoFormGroup!: FormGroup;
+  contactInfoFormGroup!: FormGroup;
+  emergContactFormGroup!: FormGroup;
+
+  sexes = [{ value: 0, viewValue: 'Male', }, { value: 1, viewValue: 'Female'}, { value: 2, viewValue: 'Prefer not to say', }]
 
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
+    this.personalInfoFormGroup = this._formBuilder.group({
+      firstNameCtrl: ['', Validators.required],
+      lastNameCtrl: ['', Validators.required],
+      dobCtrl: ['', Validators.required],
+      sexCtrl: ['', Validators.required],
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
+    this.contactInfoFormGroup = this._formBuilder.group({
+      emailCtrl: ['', [Validators.required, Validators.email]],
+      phoneNumberCtrl: ['', Validators.required],
+      addressLineOneCtrl: ['', Validators.required],
+      addressLineTwoCtrl: ['', Validators.required],
+      postcodeCtrl: ['', Validators.required],
     });
-    this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required],
-    });
-    this.fourthFormGroup = this._formBuilder.group({
-      fourthCtrl: ['', Validators.required],
+    this.emergContactFormGroup = this._formBuilder.group({
+      emergNameCtrl: ['', Validators.required],
+      emergPhoneNumberCtrl: ['', Validators.required],
     });
   }
+
 }

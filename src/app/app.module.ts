@@ -20,7 +20,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     BrowserAnimationsModule,
     CoreModule,
   ],
-  providers: [UserService, {provide: MAT_DATE_LOCALE, useValue: 'en-CA'}],
+  providers: [UserService, {provide: MAT_DATE_LOCALE, useValue: 'en-US'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
