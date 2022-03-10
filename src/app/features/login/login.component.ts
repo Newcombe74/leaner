@@ -12,7 +12,7 @@ export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
 
-  getErrorMessage() {
+  getEmailErrorMessage() {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
     }
