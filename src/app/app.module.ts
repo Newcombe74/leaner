@@ -11,9 +11,11 @@ import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
 import { UserService } from './core/services/user.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { OnlyNumber } from './shared/directives/only-number.directive';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, 
+    LoginComponent, RegisterComponent, OnlyNumber],
   imports: [
     BrowserModule,
     AppRoutingModule,
