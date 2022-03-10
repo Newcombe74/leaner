@@ -4,6 +4,7 @@ import { PageNotFoundComponent } from './core/components/page-not-found/pagenotf
 import { AboutComponent } from './features/about/about.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
+import { RegisterComponent } from './features/register/register.component';
 import { ResourcesComponent } from './features/resources/resources.component';
   
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
     { path: 'about', component: AboutComponent},
     { path: 'resources', component: ResourcesComponent},
     { path: 'login', component: LoginComponent},
+    { path: 'register', component: RegisterComponent},
   
     //Wild Card Route for 404 request
     { path: '**', pathMatch: 'full', 
