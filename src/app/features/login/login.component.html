@@ -1,5 +1,5 @@
 <h1>Login</h1>
-<div class="container">
+<mat-card><div class="container">
     <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="pat@example.com" [formControl]="email" required>
@@ -10,6 +10,7 @@
         <input matInput placeholder="password" [formControl]="password" required>
     </mat-form-field>
     <button mat-raised-button color="accent">Register</button>
-    <button mat-raised-button color="primary">Login</button>
+    <button mat-raised-button color="primary" (click)="attemptLogin()">Login</button>
     
 </div>
+</mat-card>

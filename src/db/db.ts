@@ -18,6 +18,7 @@ export interface User {
 export interface WaitRequest {
   id?: number;
   userId: number;
+  created: Date;
   done?: boolean;
 }
 export interface Hospital {
@@ -37,8 +38,9 @@ export class AppDB extends Dexie {
   constructor() {
     super('ngdexieliveQuery');
     this.version(3).stores({
-      users: '++id',
-      todoItems: '++id, todoListId',
+      users: '++id, firstName, lastName, dob, sex, &email, password, phoneNumber, addressLineOne, addressLineTwo, postcode, emergencyFullName, emergencyPhoneNumber',
+      waitRequests: '++id, userId, created, done',
+      hospitals: '++id, &name, addressLineOne, addressLineTwo, postcode, phoneNumber'
     });
     this.on('populate', () => this.populate());
   }
@@ -128,9 +130,11 @@ export class AppDB extends Dexie {
     });
 
     // Create wait request
+    /*
     await db.waitRequests.add({
       userId,
     });
+    */
   }
 
   async resetWaitRequests() {
