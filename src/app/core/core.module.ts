@@ -13,11 +13,12 @@ import { MatCardModule } from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
 import { UserService } from './services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [NavbarComponent],
   imports: [BrowserModule, AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule],
-  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule],
+  exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule, MatDatepickerModule],
   providers: [UserService],
   bootstrap: [NavbarComponent],
 })

@@ -10,6 +10,7 @@ import { ResourcesComponent } from './features/resources/resources.component';
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
 import { UserService } from './core/services/user.service';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, LoginComponent, RegisterComponent],
@@ -19,7 +20,7 @@ import { UserService } from './core/services/user.service';
     BrowserAnimationsModule,
     CoreModule,
   ],
-  providers: [UserService],
+  providers: [UserService, {provide: MAT_DATE_LOCALE, useValue: 'en-CA'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
