@@ -1,0 +1,54 @@
+.header {
+    padding-top: 3em;
+	padding-right: 9em;
+    padding-left: 9em;
+}
+
+.header-text {
+    color:#404FCC;
+    font: 1.5em Helvetica, sans-serif;
+    font-weight: 300;
+}
+
+h1 {
+	color: #162B66;
+	font: bold 4em Helvetica, sans-serif;
+}
+
+h2 {
+	color: #404FCC;
+	font: bold 2.5em Helvetica, sans-serif;
+    font-weight: 500;
+}
+
+h3 {
+	font: 20px Helvetica, sans-serif;
+}
+
+article {
+	padding: 2em;
+}
+
+#col-1 {
+	width: 60%;
+	padding: 1em;
+	margin-bottom: 1em;
+	background: #fff;
+	box-sizing: border-box;
+}
+
+#col-2 {
+	width: 30%;
+	padding: 1em;
+	margin-bottom: 1em;
+	background: #fff;
+	box-sizing: border-box;
+}
+
+.container{
+	display: flex;
+	width:  100%;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: stretch;
+}
