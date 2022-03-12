@@ -17,6 +17,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AppDBService } from './services/db.service';
+import { ToastService } from '../shared/services/toast.service';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -24,8 +26,8 @@ import { AppDBService } from './services/db.service';
     MatTooltipModule, MatFormFieldModule],
   exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule,
     FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule,
-    MatDatepickerModule, MatSelectModule, MatNativeDateModule],
-  providers: [AppDBService, UserService],
+    MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatSnackBarModule],
+  providers: [AppDBService, UserService, ToastService],
   bootstrap: [NavbarComponent],
 })
 export class CoreModule {
