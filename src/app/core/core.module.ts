@@ -16,6 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AppDBService } from './services/db.service';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -24,7 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
   exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule,
     FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule,
     MatDatepickerModule, MatSelectModule, MatNativeDateModule],
-  providers: [UserService],
+  providers: [AppDBService, UserService],
   bootstrap: [NavbarComponent],
 })
 export class CoreModule {

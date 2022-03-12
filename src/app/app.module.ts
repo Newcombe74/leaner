@@ -12,6 +12,7 @@ import { RegisterComponent } from './features/register/register.component';
 import { UserService } from './core/services/user.service';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { OnlyNumber } from './shared/directives/only-number.directive';
+import { AppDBService } from './core/services/db.service';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, 
@@ -22,7 +23,7 @@ import { OnlyNumber } from './shared/directives/only-number.directive';
     BrowserAnimationsModule,
     CoreModule,
   ],
-  providers: [UserService, {provide: MAT_DATE_LOCALE, useValue: 'en-US'}],
+  providers: [AppDBService, UserService, {provide: MAT_DATE_LOCALE, useValue: 'en-US'}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

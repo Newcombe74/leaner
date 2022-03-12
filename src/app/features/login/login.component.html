@@ -1,17 +1,60 @@
 <h1>Login</h1>
-<mat-card><div class="container">
-    <mat-form-field appearance="fill">
-        <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="pat@example.com" [formControl]="email" required>
-        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Enter your password</mat-label>
-        <input matInput placeholder="password" [formControl]="password" required>
-    </mat-form-field>
-    <p *ngIf="loginFailed" style="color: red;">Login failed, please check your email and password.</p>
-    <button mat-raised-button color="accent">Register</button>
-    <button mat-raised-button color="primary" (click)="attemptLogin()">Login</button>
-    
-</div>
+<mat-card
+  ><div class="container">
+    <form class="form">
+      <div class="email">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input
+            matInput
+            placeholder="pat@example.com"
+            [formControl]="emailCtrl"
+            required
+          />
+          <mat-error *ngIf="emailCtrl.invalid">{{
+            getEmailErrorMessage()
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="password">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            [formControl]="passwordCtrl"
+            required
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hidePassword = !hidePassword"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hidePassword"
+          >
+            <mat-icon>{{
+              hidePassword ? "visibility_off" : "visibility"
+            }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </form>
+    <p *ngIf="loginFailed" style="color: red">
+      Login failed, please check your email and password.
+    </p>
+
+    <div class="buttons">
+      <button class="register" mat-raised-button color="accent">
+        Register
+      </button>
+      <button
+        class="login"
+        mat-raised-button
+        color="primary"
+        (click)="attemptLogin()"
+      >
+        Login
+      </button>
+    </div>
+  </div>
 </mat-card>
