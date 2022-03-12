@@ -27,6 +27,7 @@ export class RegisterComponent {
       lastNameCtrl: ['', Validators.required],
       dobCtrl: ['', Validators.required],
       sexCtrl: ['', Validators.required],
+      healthCardNumberCtrl: ['', Validators.required],
     });
     this.contactInfoFormGroup = this._formBuilder.group({
       emailCtrl: ['', [Validators.required, Validators.email]],
