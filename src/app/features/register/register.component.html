@@ -1,22 +1,43 @@
 <h1>Register</h1>
-<mat-stepper orientation="vertical" [linear]="true" #stepper>
+<!--TODO: SET linear to TRUE -->
+<mat-stepper orientation="vertical" [linear]="false" #stepper>
   <mat-step [stepControl]="personalInfoFormGroup">
     <form [formGroup]="personalInfoFormGroup">
       <ng-template matStepLabel>Personal Information</ng-template>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field hintLabel="Max 20 characters" appearance="fill">
         <mat-label>First Name</mat-label>
-        <input matInput placeholder="First name" formControlName="firstNameCtrl" required />
+        <input
+          matInput
+          #firstNameInput
+          placeholder="First name"
+          formControlName="firstNameCtrl"
+          maxlength="20"
+          required
+        />
+        <mat-hint align="end"
+          >{{ firstNameInput.value?.length || 0 }}/20</mat-hint
+        >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field hintLabel="Max 20 characters" appearance="fill">
         <mat-label>Last Name</mat-label>
-        <input matInput placeholder="Last name" formControlName="lastNameCtrl" required />
+        <input
+          matInput
+          #lastNameInput
+          placeholder="Last name"
+          formControlName="lastNameCtrl"
+          maxlength="20"
+          required
+        />
+        <mat-hint align="end"
+          >{{ lastNameInput.value?.length || 0 }}/20</mat-hint
+        >
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Date of Birth</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dobCtrl">
+        <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="dobCtrl" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -25,7 +46,7 @@
         <mat-label>Sex</mat-label>
         <mat-select formControlName="sexCtrl" required>
           <mat-option *ngFor="let sex of sexes" [value]="sex.value">
-            {{sex.viewValue}}
+            {{ sex.viewValue }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -42,29 +63,68 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="pat@example.com" formControlName="emailCtrl" required>
+        <input
+          matInput
+          placeholder="Ex. pat@example.ca"
+          formControlName="emailCtrl"
+          required
+        />
+        <mat-error>{{
+          getEmailErrorMessage()
+        }}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Phone Number</mat-label>
-        <input matInput formControlName="phoneNumberCtrl" required [OnlyNumber]="true"/>
+        <span matPrefix>+1 &nbsp;</span>
+        <input
+          matInput
+          formControlName="phoneNumberCtrl"
+          required
+          maxlength="10"
+          [OnlyNumber]="true"
+        />
         <mat-icon matSuffix>phone</mat-icon>
-        <mat-hint>Include area code</mat-hint>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field hintLabel="Max 40 characters" appearance="fill">
         <mat-label>Address Line One</mat-label>
-        <input matInput formControlName="addressLineOneCtrl" placeholder="Ex. 1 Spring Garden Road" required />
+        <input
+          matInput
+          #addressLineOneInput
+          formControlName="addressLineOneCtrl"
+          maxlength="40"
+          placeholder="Ex. 1 Spring Garden Road"
+          required
+        />
+        <mat-hint align="end"
+          >{{ addressLineOneInput.value?.length || 0 }}/40</mat-hint
+        >
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field hintLabel="Max 20 characters" appearance="fill">
         <mat-label>Address Line Two</mat-label>
-        <input matInput formControlName="addressLineTwoCtrl" placeholder="Ex. Halifax" required />
+        <input
+          matInput
+          formControlName="addressLineOneCtrl"
+          maxlength="20"
+          placeholder="Ex. Halifax"
+          required
+        />
+        <mat-hint align="end"
+          >{{ addressLineOneInput.value?.length || 0 }}/20</mat-hint
+        >
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Postcode</mat-label>
-        <input matInput formControlName="postcodeCtrl" placeholder="Ex. B3H 1A1" required />
+        <input
+          matInput
+          formControlName="postcodeCtrl"
+          placeholder="Ex. B3H1A1"
+          maxlength="6"
+          required
+        />
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -77,16 +137,32 @@
     <form [formGroup]="emergContactFormGroup">
       <ng-template matStepLabel>Emergency Contact Information</ng-template>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field hintLabel="Max 40 characters" appearance="fill">
         <mat-label>Full Name</mat-label>
-        <input matInput placeholder="Full name" formControlName="emergNameCtrl" required />
+        <input
+          matInput
+          #emergFullNameInput
+          placeholder="Full name"
+          formControlName="emergNameCtrl"
+          maxlength="40"
+          required
+        />
+        <mat-hint align="end"
+          >{{ emergFullNameInput.value?.length || 0 }}/40</mat-hint
+        >
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Phone Number</mat-label>
-        <input matInput formControlName="emergPhoneNumberCtrl" required [OnlyNumber]="true"/>
+        <span matPrefix>+1 &nbsp;</span>
+        <input
+          matInput
+          formControlName="emergPhoneNumberCtrl"
+          maxlength="10"
+          required
+          [OnlyNumber]="true"
+        />
         <mat-icon matSuffix>phone</mat-icon>
-        <mat-hint>Include area code</mat-hint>
       </mat-form-field>
 
       <div>
