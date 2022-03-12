@@ -1,9 +1,14 @@
 # LeanER
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.5.
+Canadian hospitals have a history of long wait times for emergency room admission. In recent years this issue has been intensified by the COVID-19 pandemic increasing hospital usage There are many reasons someone may require emergency room services, and not all are immediate, life-threatening emergencies. LeanER was desirned for individuals who need care but face long waits because of comparably less severe ailments. LeanER allows you to spend your wait time outside of the hospital, such as in the comfort of your own home.
 
 ## Authors
+
 Julia Ashley-Smith, Conor J. Newcombe, Toklir Sadiku, Jordan Kyle
+
+## Install dependencies
+
+Run `npm install` to install all dependencies for LeanER.
 
 ## Development server
 
@@ -16,14 +21,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 
