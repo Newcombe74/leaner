@@ -9,11 +9,7 @@ export class UserService {
 
     constructor() { }
 
-    /**
-     * Use to change user name 
-     * @data type: string
-     */
-    userChange(data: User) {
+    userChange(data?: User) {
         this.execChange.next(data);
     }
 }

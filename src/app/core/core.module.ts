@@ -12,12 +12,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { UserService } from './services/user.service';
 import { BrowserModule } from '@angular/platform-browser';
+import { AppDBService } from './services/db.service';
 
 @NgModule({
   declarations: [NavbarComponent],
   imports: [BrowserModule, AppRoutingModule, MatToolbarModule, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule],
   exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule],
-  providers: [UserService],
+  providers: [AppDBService, UserService],
   bootstrap: [NavbarComponent],
 })
 export class CoreModule {

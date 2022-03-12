@@ -9,6 +9,7 @@ import { AboutComponent } from './features/about/about.component';
 import { ResourcesComponent } from './features/resources/resources.component';
 import { LoginComponent } from './features/login/login.component';
 import { UserService } from './core/services/user.service';
+import { AppDBService } from './core/services/db.service';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, LoginComponent],
@@ -18,7 +19,7 @@ import { UserService } from './core/services/user.service';
     BrowserAnimationsModule,
     CoreModule,
   ],
-  providers: [UserService],
+  providers: [AppDBService, UserService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
