@@ -1,5 +1,16 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppDBService } from 'src/app/core/services/db.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 import { LeanERErrorStateMatcher } from 'src/app/shared/utils/leaner-error-state-matcher';
 import { User } from 'src/db/db';
 
@@ -27,7 +38,13 @@ export class RegisterComponent {
     { value: 2, viewValue: 'Prefer not to say' },
   ];
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private appDBService: AppDBService,
+    private userService: UserService,
+    private toastService: ToastService,
+    private _formBuilder: FormBuilder
+  ) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 100, 0, 1);
     this.maxDate = new Date();
@@ -52,13 +69,16 @@ export class RegisterComponent {
       emergNameCtrl: ['', Validators.required],
       emergPhoneNumberCtrl: ['', Validators.required],
     });
-    this.passwordFormGroup = this._formBuilder.group({
-      passwordCtrl: ['', Validators.required],
-      passwordConfirmCtrl: ['', Validators.required],
-    }, { validators: this.checkPasswords });
+    this.passwordFormGroup = this._formBuilder.group(
+      {
+        passwordCtrl: ['', Validators.required],
+        passwordConfirmCtrl: ['', Validators.required],
+      },
+      { validators: this.checkPasswords }
+    );
   }
 
-  submitRegistration() {
+  async submitRegistration() {
     // Populate user object
     let personalInfoCtrls = this.personalInfoFormGroup.controls;
     let contactInfoCtrls = this.contactInfoFormGroup.controls;
@@ -81,8 +101,17 @@ export class RegisterComponent {
     };
 
     // Add to DB
+    let response = await this.appDBService.registerUser(user);
 
     // Handle DB Response
+    if(response.status === 0) {
+      this.toastService.submitToast('Registration Successful');
+
+      // Login user
+      this.userService.userChange(response.user);
+
+      this.router.navigate(['/']);
+    }
   }
 
   getEmailErrorMessage() {
@@ -93,15 +122,17 @@ export class RegisterComponent {
     return '';
   }
 
-  checkPasswords: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => { 
+  checkPasswords: ValidatorFn = (
+    group: AbstractControl
+  ): ValidationErrors | null => {
     let pass = group.get('passwordCtrl');
-    if(pass) {
+    if (pass) {
       pass = pass.value;
     }
     let confirmPass = group.get('passwordConfirmCtrl');
-    if(confirmPass) {
+    if (confirmPass) {
       confirmPass = confirmPass.value;
     }
     return pass === confirmPass ? null : { notSame: true };
-  }
+  };
 }
