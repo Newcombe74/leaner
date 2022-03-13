@@ -7,9 +7,8 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { AppDBService } from 'src/app/core/services/db.service';
-import { UserService } from 'src/app/core/services/user.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { LeanERErrorStateMatcher } from 'src/app/shared/utils/leaner-error-state-matcher';
 import { User } from 'src/db/db';
@@ -20,7 +19,9 @@ import { User } from 'src/db/db';
   styleUrls: ['./user-account.component.scss'],
 })
 export class UserAccountComponent {
-  user!: User;
+  currentUser!: User;
+  
+  isLoaded = false;
 
   personalInfoFormGroup!: FormGroup;
   contactInfoFormGroup!: FormGroup;
@@ -42,15 +43,14 @@ export class UserAccountComponent {
   ];
 
   constructor(
-    private router: Router,
     private appDBService: AppDBService,
-    private userService: UserService,
     private toastService: ToastService,
+    private authenticationService: AuthenticationService,
     private _formBuilder: FormBuilder
   ) {
-    this.userService.execChange.subscribe((value) => {
-      this.user = value;
-    });
+    this.authenticationService.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
 
     const currentYear = new Date().getFullYear();
     this.minDOBDate = new Date(currentYear - 100, 0, 1);
@@ -58,23 +58,24 @@ export class UserAccountComponent {
   }
 
   ngOnInit() {
+    let user = this.currentUser;
     this.personalInfoFormGroup = this._formBuilder.group({
-      firstNameCtrl: ['', Validators.required],
-      lastNameCtrl: ['', Validators.required],
-      dobCtrl: ['', Validators.required],
-      sexCtrl: ['', Validators.required],
-      healthCardNumberCtrl: ['', Validators.required],
+      firstNameCtrl: [{value: user.firstName, disabled: true}, Validators.required],
+      lastNameCtrl: [user.lastName, Validators.required],
+      dobCtrl: [user.dob, Validators.required],
+      sexCtrl: [user.sex, Validators.required],
+      healthCardNumberCtrl: [user.healthCardNumber, Validators.required],
     });
     this.contactInfoFormGroup = this._formBuilder.group({
-      emailCtrl: ['', [Validators.required, Validators.email]],
-      phoneNumberCtrl: ['', Validators.required],
-      addressLineOneCtrl: ['', Validators.required],
-      addressLineTwoCtrl: ['', Validators.required],
-      postcodeCtrl: ['', Validators.required],
+      emailCtrl: [user.email, [Validators.required, Validators.email]],
+      phoneNumberCtrl: [user.phoneNumber, Validators.required],
+      addressLineOneCtrl: [user.addressLineOne, Validators.required],
+      addressLineTwoCtrl: [user.addressLineTwo, Validators.required],
+      postcodeCtrl: [user.postcode, Validators.required],
     });
     this.emergContactFormGroup = this._formBuilder.group({
-      emergNameCtrl: ['', Validators.required],
-      emergPhoneNumberCtrl: ['', Validators.required],
+      emergNameCtrl: [user.emergencyFullName, Validators.required],
+      emergPhoneNumberCtrl: [user.emergencyPhoneNumber, Validators.required],
     });
     this.passwordFormGroup = this._formBuilder.group(
       {
@@ -108,18 +109,11 @@ export class UserAccountComponent {
       password: this.passwordFormGroup.controls['passwordCtrl'].value,
     };
 
-    // Add to DB
+    // Update DB
     let response = await this.appDBService.registerUser(user);
 
     // Handle DB Response
-    if(response.status === 0) {
-      this.toastService.submitToast('Registration Successful');
-
-      // Login user
-      this.userService.userChange(response.user);
-
-      this.router.navigate(['/']);
-    }
+    
   }
 
   getEmailErrorMessage() {

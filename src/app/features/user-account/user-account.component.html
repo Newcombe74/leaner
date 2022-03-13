@@ -1,6 +1,6 @@
 <div class="page-container">
   <h1>Your Account</h1>
-  <mat-tab-group mat-align-tabs="center">
+  <mat-tab-group  *ngIf="currentUser" mat-align-tabs="center">
     <mat-tab label="Personal Information">
       <form [formGroup]="personalInfoFormGroup">
         <mat-form-field hintLabel="Max 20 characters" appearance="fill">

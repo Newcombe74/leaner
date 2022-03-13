@@ -12,7 +12,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class NavbarComponent {
   currentUser!: User;
-  user!: User;
   isDevMode = false;
 
   constructor(
