@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { User } from 'src/db/db';
 import { AppDBService } from '../../services/db.service';
-import { UserService } from '../../services/user.service';
 import { isDevMode } from '@angular/core';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,23 +11,29 @@ import { ToastService } from 'src/app/shared/services/toast.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
+  currentUser!: User;
   user!: User;
   isDevMode = false;
 
   constructor(
     private appDBService: AppDBService,
     private toastService: ToastService,
-    private userService: UserService
+    private authenticationService: AuthenticationService
   ) {
-    this.userService.execChange.subscribe((value) => {
-      this.user = value;
-    });
-    
+    this.authenticationService.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
+
     this.isDevMode = isDevMode();
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.toastService.submitToast('Log Out Successful');
   }
 
   resetDB() {
     this.appDBService.resetDB();
-    this.toastService.submitToast('Database Reset')
+    this.toastService.submitToast('Database Reset');
   }
 }

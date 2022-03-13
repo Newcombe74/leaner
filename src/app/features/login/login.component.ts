@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { first } from 'rxjs';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { AppDBService } from 'src/app/core/services/db.service';
-import { UserService } from 'src/app/core/services/user.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 import { AppDB, db, User } from 'src/db/db';
 
 @Component({
@@ -19,9 +21,9 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private appDBService: AppDBService,
-    private userService: UserService
-  ) {
-  }
+    private authenticationService: AuthenticationService,
+    private toastService: ToastService,
+  ) {}
 
   getEmailErrorMessage() {
     if (this.emailCtrl.hasError('required')) {
@@ -39,7 +41,8 @@ export class LoginComponent {
 
     switch (response.status) {
       case 0: // Successful login
-        this.userService.userChange(response.user);
+        this.authenticationService.login(response.user!);
+        this.toastService.submitToast('Login Successful');
         this.router.navigate(['/']);
         break;
       case 1: // Failed login

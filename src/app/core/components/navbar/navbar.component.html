@@ -2,10 +2,11 @@
   <mat-toolbar-row>
     <span><a routerLink="/"><img class="nav-logo" src="../../../../assets/leaner-logo.png" alt="LeanER Logo"></a></span>
     <span class="spacer"></span>
-    <span class="welcome-message" *ngIf="user">Welcome {{user.firstName}}</span>
     <button class="nav-button" *ngIf="isDevMode" mat-flat-button color="accent" (click)="resetDB()">Reset DB</button>
-    <button class="nav-button" *ngIf="!user" mat-flat-button color="primary" routerLink="/login">Login</button>
-    <button class="nav-button" *ngIf="user" mat-flat-button color="primary" routerLink="/user-account">My Account</button>
+    <span class="welcome-message" *ngIf="currentUser">Welcome {{currentUser.firstName}}</span>
+    <button class="nav-button" *ngIf="!currentUser" mat-flat-button color="primary" routerLink="/login">Login</button>
+    <button class="nav-button" *ngIf="currentUser" mat-flat-button color="primary" routerLink="/user-account">My Account</button>
+    <button class="nav-button" *ngIf="currentUser" mat-flat-button color="primary" (click)="logout()">Log Out</button>
     <button class="nav-button" mat-flat-button color="primary" routerLink="/resources">Resources</button>
     <button class="nav-button" mat-icon-button matTooltip="About" aria-label="Info" routerLink="/about">
       <mat-icon>info</mat-icon>
