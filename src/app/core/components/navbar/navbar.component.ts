@@ -30,7 +30,7 @@ export class NavbarComponent {
 
   logout() {
     this.authenticationService.logout();
-    this.toastService.submitToast('Log Out Successful');
+    this.toastService.submitToast('Logout Successful');
     this.router.navigate(['/']);
   }
 
