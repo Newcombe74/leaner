@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ToastService } from 'src/app/shared/services/toast.service';
 import { User } from 'src/db/db';
 import { AppDBService } from '../../services/db.service';
 import { UserService } from '../../services/user.service';
 import { isDevMode } from '@angular/core';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-navbar',

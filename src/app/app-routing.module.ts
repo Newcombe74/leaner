@@ -6,6 +6,7 @@ import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
 import { ResourcesComponent } from './features/resources/resources.component';
+import { UserAccountComponent } from './features/user-account/user-account.component';
   
 const routes: Routes = [
     { path: '', component: HomeComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: 'resources', component: ResourcesComponent},
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
+    { path: 'user-account', component: UserAccountComponent},
   
     //Wild Card Route for 404 request
     { path: '**', pathMatch: 'full', 

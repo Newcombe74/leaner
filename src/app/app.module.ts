@@ -15,10 +15,11 @@ import { OnlyNumber } from './shared/directives/only-number.directive';
 import { AppDBService } from './core/services/db.service';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ToastService } from './shared/services/toast.service';
+import { UserAccountComponent } from './features/user-account/user-account.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, 
-    LoginComponent, RegisterComponent, OnlyNumber, ToastComponent],
+    LoginComponent, RegisterComponent, UserAccountComponent, OnlyNumber, ToastComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
