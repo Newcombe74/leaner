@@ -8,8 +8,8 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { AppDBService } from 'src/app/core/services/db.service';
-import { UserService } from 'src/app/core/services/user.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { LeanERErrorStateMatcher } from 'src/app/shared/utils/leaner-error-state-matcher';
 import { User } from 'src/db/db';
@@ -41,7 +41,7 @@ export class RegisterComponent {
   constructor(
     private router: Router,
     private appDBService: AppDBService,
-    private userService: UserService,
+    private authenticationService: AuthenticationService,
     private toastService: ToastService,
     private _formBuilder: FormBuilder
   ) {
@@ -108,7 +108,7 @@ export class RegisterComponent {
       this.toastService.submitToast('Registration Successful');
 
       // Login user
-      this.userService.userChange(response.user);
+      this.authenticationService.login(response.user);
 
       this.router.navigate(['/']);
     }
