@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { liveQuery } from 'dexie';
-import { db } from 'src/db/db';
+import { Router } from '@angular/router';
+import { AppDBService } from 'src/app/core/services/db.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { AppDB, db, User } from 'src/db/db';
 
 @Component({
   selector: 'login',
@@ -9,34 +11,53 @@ import { db } from 'src/db/db';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
+  user!: User;
+  emailCtrl = new FormControl('', [Validators.required, Validators.email]);
+  passwordCtrl = new FormControl('', [Validators.required]);
+  loginFailed = false;
+  hidePassword = true;
+
+  constructor(
+    private router: Router,
+    private appDBService: AppDBService,
+    private userService: UserService
+  ) {
+    this.userService.execChange.subscribe((value) => {
+      this.user = value;
+    });
+  }
 
   getEmailErrorMessage() {
-    if (this.email.hasError('required')) {
+    if (this.emailCtrl.hasError('required')) {
       return 'You must enter a value';
     }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.emailCtrl.hasError('email') ? 'Not a valid email' : '';
   }
 
   async attemptLogin() {
-    var users = await db.users.where('email').equals(this.email.value).toArray();
-    if (users.length == 1) {
-      // user found
-      var user = users[0];
-      if (user.password == this.password.value) {
-        // Successful login
-        console.log('Successful login');
-      } else {
-        // Failed login
-        console.log('Failed login');
-      }
-    } else if (users.length == 0) {
-      // no user found
-    } else {
-      // multiple users found
-      console.error('ERROR: Email should not return multiple users')
+    let email = this.emailCtrl.value;
+    let password = this.passwordCtrl.value;
+
+    let response = await this.appDBService.attemptLogin(email, password);
+
+    switch (response.status) {
+      case 0: // Successful login
+        this.userService.userChange(response.user);
+        this.router.navigate(['/']);
+        break;
+      case 1: // Failed login
+        this.loginFailed = true;
+        console.log(response.message);
+        break;
+      case 2: // Multiple users found
+        console.error(response.message);
+        break;
+      default:
+        // Status not known
+        console.error(
+          'ERROR: Response status ' + response.status + ' not recognised'
+        );
     }
   }
 }

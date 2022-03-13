@@ -37,7 +37,7 @@ export class AppDB extends Dexie {
 
   constructor() {
     super('ngdexieliveQuery');
-    this.version(3).stores({
+    this.version(4).stores({
       users: '++id, firstName, lastName, dob, sex, &email, password, phoneNumber, addressLineOne, addressLineTwo, postcode, emergencyFullName, emergencyPhoneNumber',
       waitRequests: '++id, userId, created, done',
       hospitals: '++id, &name, addressLineOne, addressLineTwo, postcode, phoneNumber'
@@ -125,7 +125,7 @@ export class AppDB extends Dexie {
       addressLineOne: '208-1078 Tower Road',
       addressLineTwo: 'Halifax',
       postcode: 'B3H 2Y5',
-      emergencyFullName: 'Mary',
+      emergencyFullName: 'Mary Smith',
       emergencyPhoneNumber: '987654321'
     });
 
@@ -137,7 +137,7 @@ export class AppDB extends Dexie {
     */
   }
 
-  async resetWaitRequests() {
+  async resetDatabase() {
     await db.transaction('rw', 'users', 'waitRequests', 'hospitals', () => {
       this.users.clear();
       this.waitRequests.clear();
