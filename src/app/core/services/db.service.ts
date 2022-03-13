@@ -14,6 +14,12 @@ export interface RegisterResponse {
   message?: string;
 }
 
+export interface UpdateResponse {
+  status: number;
+  user: User;
+  message?: string;
+}
+
 @Injectable()
 export class AppDBService {
   private db!: AppDB;
@@ -48,6 +54,11 @@ export class AppDBService {
 
   async registerUser(user: User): Promise<RegisterResponse> {
     user.id = await this.db.users.add(user);
+    return { status: 0, user };
+  }
+
+  async updateUser(user: User): Promise<UpdateResponse> {
+    user.id = await this.db.users.update(user.id!, user);
     return { status: 0, user };
   }
 

@@ -22,6 +22,7 @@ export class UserAccountComponent {
   currentUser!: User;
   
   isLoaded = false;
+  isEditing = false;
 
   personalInfoFormGroup!: FormGroup;
   contactInfoFormGroup!: FormGroup;
@@ -61,21 +62,21 @@ export class UserAccountComponent {
     let user = this.currentUser;
     this.personalInfoFormGroup = this._formBuilder.group({
       firstNameCtrl: [{value: user.firstName, disabled: true}, Validators.required],
-      lastNameCtrl: [user.lastName, Validators.required],
-      dobCtrl: [user.dob, Validators.required],
-      sexCtrl: [user.sex, Validators.required],
-      healthCardNumberCtrl: [user.healthCardNumber, Validators.required],
+      lastNameCtrl: [{value: user.lastName, disabled: true}, Validators.required],
+      dobCtrl: [{value: user.dob, disabled: true}, Validators.required],
+      sexCtrl: [{value: user.sex, disabled: true}, Validators.required],
+      healthCardNumberCtrl: [{value: user.healthCardNumber, disabled: true}, Validators.required],
     });
     this.contactInfoFormGroup = this._formBuilder.group({
-      emailCtrl: [user.email, [Validators.required, Validators.email]],
-      phoneNumberCtrl: [user.phoneNumber, Validators.required],
-      addressLineOneCtrl: [user.addressLineOne, Validators.required],
-      addressLineTwoCtrl: [user.addressLineTwo, Validators.required],
-      postcodeCtrl: [user.postcode, Validators.required],
+      emailCtrl: [{value: user.email, disabled: true}, [Validators.required, Validators.email]],
+      phoneNumberCtrl: [{value: user.phoneNumber, disabled: true}, Validators.required],
+      addressLineOneCtrl: [{value: user.addressLineOne, disabled: true}, Validators.required],
+      addressLineTwoCtrl: [{value: user.addressLineTwo, disabled: true}, Validators.required],
+      postcodeCtrl: [{value: user.postcode, disabled: true}, Validators.required],
     });
     this.emergContactFormGroup = this._formBuilder.group({
-      emergNameCtrl: [user.emergencyFullName, Validators.required],
-      emergPhoneNumberCtrl: [user.emergencyPhoneNumber, Validators.required],
+      emergNameCtrl: [{value: user.emergencyFullName, disabled: true}, Validators.required],
+      emergPhoneNumberCtrl: [{value: user.emergencyPhoneNumber, disabled: true}, Validators.required],
     });
     this.passwordFormGroup = this._formBuilder.group(
       {
@@ -94,6 +95,7 @@ export class UserAccountComponent {
     let emergContactCtrls = this.emergContactFormGroup.controls;
     let user: User;
     user = {
+      id: this.currentUser.id,
       firstName: personalInfoCtrls['firstNameCtrl'].value,
       lastName: personalInfoCtrls['lastNameCtrl'].value,
       dob: personalInfoCtrls['dobCtrl'].value,
@@ -106,14 +108,52 @@ export class UserAccountComponent {
       postcode: contactInfoCtrls['postcodeCtrl'].value,
       emergencyFullName: emergContactCtrls['emergNameCtrl'].value,
       emergencyPhoneNumber: emergContactCtrls['emergPhoneNumberCtrl'].value,
-      password: this.passwordFormGroup.controls['passwordCtrl'].value,
+      password: this.currentUser.password
     };
 
     // Update DB
-    let response = await this.appDBService.registerUser(user);
+    let response = await this.appDBService.updateUser(user);
 
     // Handle DB Response
-    
+    if(response.status === 0) {
+      this.toastService.submitToast('Update Successful');
+      
+      this.authenticationService.login(response.user);
+
+      this.cancelEditing();
+    }
+  }
+
+  enableEditing() {
+    this.isEditing = true;
+
+    this.personalInfoFormGroup.enable();
+    this.contactInfoFormGroup.enable();
+    this.emergContactFormGroup.enable();
+  }
+
+  cancelEditing() {
+    this.isEditing = false;
+
+    let user = this.currentUser;
+    this.personalInfoFormGroup = this._formBuilder.group({
+      firstNameCtrl: [{value: user.firstName, disabled: true}, Validators.required],
+      lastNameCtrl: [{value: user.lastName, disabled: true}, Validators.required],
+      dobCtrl: [{value: user.dob, disabled: true}, Validators.required],
+      sexCtrl: [{value: user.sex, disabled: true}, Validators.required],
+      healthCardNumberCtrl: [{value: user.healthCardNumber, disabled: true}, Validators.required],
+    });
+    this.contactInfoFormGroup = this._formBuilder.group({
+      emailCtrl: [{value: user.email, disabled: true}, [Validators.required, Validators.email]],
+      phoneNumberCtrl: [{value: user.phoneNumber, disabled: true}, Validators.required],
+      addressLineOneCtrl: [{value: user.addressLineOne, disabled: true}, Validators.required],
+      addressLineTwoCtrl: [{value: user.addressLineTwo, disabled: true}, Validators.required],
+      postcodeCtrl: [{value: user.postcode, disabled: true}, Validators.required],
+    });
+    this.emergContactFormGroup = this._formBuilder.group({
+      emergNameCtrl: [{value: user.emergencyFullName, disabled: true}, Validators.required],
+      emergPhoneNumberCtrl: [{value: user.emergencyPhoneNumber, disabled: true}, Validators.required],
+    });
   }
 
   getEmailErrorMessage() {

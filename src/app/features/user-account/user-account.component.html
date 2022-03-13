@@ -1,7 +1,7 @@
 <div class="page-container">
   <h1>Your Account</h1>
-  <mat-tab-group  *ngIf="currentUser" mat-align-tabs="center">
-    <mat-tab label="Personal Information">
+  <mat-tab-group *ngIf="currentUser" mat-align-tabs="center">
+    <mat-tab label="Personal Information" #personalInfoTab [disabled]="!personalInfoTab.isActive && isEditing">
       <form [formGroup]="personalInfoFormGroup">
         <mat-form-field hintLabel="Max 20 characters" appearance="fill">
           <mat-label>First Name</mat-label>
@@ -51,7 +51,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Sex</mat-label>
-          <mat-select formControlName="sexCtrl" required>
+          <mat-select formControlName="sexCtrl" [disabled]="personalInfoFormGroup.controls['sexCtrl'].disabled" required>
             <mat-option *ngFor="let sex of sexes" [value]="sex.value">
               {{ sex.viewValue }}
             </mat-option>
@@ -70,13 +70,46 @@
           />
         </mat-form-field>
 
-        <div>
-          <button mat-raised-button color="accent">Update</button>
+        <div class="updates-buttons-container">
+          <div *ngIf="isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="primary"
+              matTooltip="Submit Update"
+              (click)="submitUpdate()"
+              [disabled]="!personalInfoFormGroup.dirty || !personalInfoFormGroup.valid"
+              aria-label="Submit user information update button"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="!isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="accent"
+              matTooltip="Edit Profile"
+              (click)="enableEditing()"
+              aria-label="Edit user information button"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="warn"
+              matTooltip="Cancel"
+              (click)="cancelEditing()"
+              aria-label="Cancel user information update button"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         </div>
       </form>
     </mat-tab>
 
-    <mat-tab label="Contact Information">
+    <mat-tab label="Contact Information" #contactInfoTab [disabled]="!contactInfoTab.isActive && isEditing">
       <form [formGroup]="contactInfoFormGroup">
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
@@ -145,13 +178,46 @@
           />
         </mat-form-field>
 
-        <div>
-          <button mat-raised-button color="accent">Update</button>
+        <div class="updates-buttons-container">
+          <div *ngIf="isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="primary"
+              matTooltip="Submit Update"
+              (click)="submitUpdate()"
+              [disabled]="!contactInfoFormGroup.dirty || !contactInfoFormGroup.valid"
+              aria-label="Submit user information update button"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="!isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="accent"
+              matTooltip="Edit Profile"
+              (click)="enableEditing()"
+              aria-label="Edit user information button"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="warn"
+              matTooltip="Cancel"
+              (click)="cancelEditing()"
+              aria-label="Cancel user information update button"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         </div>
       </form>
     </mat-tab>
 
-    <mat-tab label="Emergency Contact Information">
+    <mat-tab label="Emergency Contact Information" #emergInfoTab [disabled]="!emergInfoTab.isActive && isEditing">
       <form [formGroup]="emergContactFormGroup">
         <mat-form-field hintLabel="Max 40 characters" appearance="fill">
           <mat-label>Full Name</mat-label>
@@ -182,13 +248,46 @@
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
-        <div>
-          <button mat-raised-button color="accent">Update</button>
+        <div class="updates-buttons-container">
+          <div *ngIf="isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="primary"
+              matTooltip="Submit Update"
+              (click)="submitUpdate()"
+              [disabled]="!emergContactFormGroup.dirty || !emergContactFormGroup.valid"
+              aria-label="Submit user information update button"
+            >
+              <mat-icon>done</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="!isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="accent"
+              matTooltip="Edit Profile"
+              (click)="enableEditing()"
+              aria-label="Edit user information button"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="isEditing" class="fab-button-container">
+            <button
+              mat-fab
+              color="warn"
+              matTooltip="Cancel"
+              (click)="cancelEditing()"
+              aria-label="Cancel user information update button"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
         </div>
       </form>
     </mat-tab>
 
-    <mat-tab label="Update Password">
+    <mat-tab label="Update Password" [disabled]="isEditing">
       <form [formGroup]="passwordFormGroup">
         <mat-form-field appearance="fill">
           <mat-label>Enter current password</mat-label>
@@ -210,7 +309,7 @@
             }}</mat-icon>
           </button>
         </mat-form-field>
-        
+
         <mat-form-field appearance="fill">
           <mat-label>Enter new password</mat-label>
           <input
