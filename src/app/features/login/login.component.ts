@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { AuthenticationService } from 'src/app/core/services/authentication.service';
 import { AppDBService } from 'src/app/core/services/db.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 import { AppDB, db, User } from 'src/db/db';
 
 @Component({
@@ -20,7 +21,8 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private appDBService: AppDBService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private toastService: ToastService,
   ) {}
 
   getEmailErrorMessage() {
@@ -40,6 +42,7 @@ export class LoginComponent {
     switch (response.status) {
       case 0: // Successful login
         this.authenticationService.login(response.user!);
+        this.toastService.submitToast('Login Successful');
         this.router.navigate(['/']);
         break;
       case 1: // Failed login

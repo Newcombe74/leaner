@@ -29,6 +29,7 @@ export class NavbarComponent {
 
   logout() {
     this.authenticationService.logout();
+    this.toastService.submitToast('Log Out Successful');
   }
 
   resetDB() {
