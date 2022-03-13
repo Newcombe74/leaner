@@ -3,9 +3,15 @@ import { Subject } from 'rxjs';
 import { AppDB, db, User } from 'src/db/db';
 
 export interface LoginResponse {
-    status: number;
-    user?: User;
-    message: string;
+  status: number;
+  user?: User;
+  message: string;
+}
+
+export interface RegisterResponse {
+  status: number;
+  user: User;
+  message?: string;
 }
 
 @Injectable()
@@ -23,17 +29,29 @@ export class AppDBService {
       var user = users[0];
       if (user.password == password) {
         // Successful login
-        return { status: 0, user, message: 'Successful login'};
+        return { status: 0, user, message: 'Successful login' };
       } else {
         // Failed login
-        return { status: 1, message: 'Failed login'};
+        return { status: 1, message: 'Failed login' };
       }
     } else if (users.length == 0) {
       // no user found
-      return { status: 1, message: 'No user found'};
+      return { status: 1, message: 'No user found' };
     } else {
       // multiple users found
-      return { status: 2, message: 'ERROR: Email should not return multiple users'};
+      return {
+        status: 2,
+        message: 'ERROR: Email should not return multiple users',
+      };
     }
+  }
+
+  async registerUser(user: User): Promise<RegisterResponse> {
+    user.id = await this.db.users.add(user);
+    return { status: 0, user };
+  }
+
+  resetDB() {
+    this.db.resetDatabase();
   }
 }

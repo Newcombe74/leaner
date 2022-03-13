@@ -1,5 +1,18 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { AppDBService } from 'src/app/core/services/db.service';
+import { UserService } from 'src/app/core/services/user.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { LeanERErrorStateMatcher } from 'src/app/shared/utils/leaner-error-state-matcher';
+import { User } from 'src/db/db';
 
 @Component({
   selector: 'register',
@@ -10,12 +23,28 @@ export class RegisterComponent {
   personalInfoFormGroup!: FormGroup;
   contactInfoFormGroup!: FormGroup;
   emergContactFormGroup!: FormGroup;
+  passwordFormGroup!: FormGroup;
+
   minDate: Date;
   maxDate: Date;
 
-  sexes = [{ value: 0, viewValue: 'Male', }, { value: 1, viewValue: 'Female'}, { value: 2, viewValue: 'Prefer not to say', }]
+  hidePassword = true;
+  hideConfirmPassword = true;
+  matcher = new LeanERErrorStateMatcher();
 
-  constructor(private _formBuilder: FormBuilder) {
+  sexes = [
+    { value: 0, viewValue: 'Male' },
+    { value: 1, viewValue: 'Female' },
+    { value: 2, viewValue: 'Prefer not to say' },
+  ];
+
+  constructor(
+    private router: Router,
+    private appDBService: AppDBService,
+    private userService: UserService,
+    private toastService: ToastService,
+    private _formBuilder: FormBuilder
+  ) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 100, 0, 1);
     this.maxDate = new Date();
@@ -27,6 +56,7 @@ export class RegisterComponent {
       lastNameCtrl: ['', Validators.required],
       dobCtrl: ['', Validators.required],
       sexCtrl: ['', Validators.required],
+      healthCardNumberCtrl: ['', Validators.required],
     });
     this.contactInfoFormGroup = this._formBuilder.group({
       emailCtrl: ['', [Validators.required, Validators.email]],
@@ -39,6 +69,49 @@ export class RegisterComponent {
       emergNameCtrl: ['', Validators.required],
       emergPhoneNumberCtrl: ['', Validators.required],
     });
+    this.passwordFormGroup = this._formBuilder.group(
+      {
+        passwordCtrl: ['', Validators.required],
+        passwordConfirmCtrl: ['', Validators.required],
+      },
+      { validators: this.checkPasswords }
+    );
+  }
+
+  async submitRegistration() {
+    // Populate user object
+    let personalInfoCtrls = this.personalInfoFormGroup.controls;
+    let contactInfoCtrls = this.contactInfoFormGroup.controls;
+    let emergContactCtrls = this.emergContactFormGroup.controls;
+    let user: User;
+    user = {
+      firstName: personalInfoCtrls['firstNameCtrl'].value,
+      lastName: personalInfoCtrls['lastNameCtrl'].value,
+      dob: personalInfoCtrls['dobCtrl'].value,
+      sex: personalInfoCtrls['sexCtrl'].value,
+      healthCardNumber: personalInfoCtrls['healthCardNumberCtrl'].value,
+      email: contactInfoCtrls['emailCtrl'].value,
+      phoneNumber: contactInfoCtrls['phoneNumberCtrl'].value,
+      addressLineOne: contactInfoCtrls['addressLineOneCtrl'].value,
+      addressLineTwo: contactInfoCtrls['addressLineTwoCtrl'].value,
+      postcode: contactInfoCtrls['postcodeCtrl'].value,
+      emergencyFullName: emergContactCtrls['emergNameCtrl'].value,
+      emergencyPhoneNumber: emergContactCtrls['emergPhoneNumberCtrl'].value,
+      password: this.passwordFormGroup.controls['passwordCtrl'].value,
+    };
+
+    // Add to DB
+    let response = await this.appDBService.registerUser(user);
+
+    // Handle DB Response
+    if(response.status === 0) {
+      this.toastService.submitToast('Registration Successful');
+
+      // Login user
+      this.userService.userChange(response.user);
+
+      this.router.navigate(['/']);
+    }
   }
 
   getEmailErrorMessage() {
@@ -49,4 +122,17 @@ export class RegisterComponent {
     return '';
   }
 
+  checkPasswords: ValidatorFn = (
+    group: AbstractControl
+  ): ValidationErrors | null => {
+    let pass = group.get('passwordCtrl');
+    if (pass) {
+      pass = pass.value;
+    }
+    let confirmPass = group.get('passwordConfirmCtrl');
+    if (confirmPass) {
+      confirmPass = confirmPass.value;
+    }
+    return pass === confirmPass ? null : { notSame: true };
+  };
 }

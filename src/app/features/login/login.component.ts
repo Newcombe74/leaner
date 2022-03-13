@@ -11,7 +11,6 @@ import { AppDB, db, User } from 'src/db/db';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  user!: User;
   emailCtrl = new FormControl('', [Validators.required, Validators.email]);
   passwordCtrl = new FormControl('', [Validators.required]);
   loginFailed = false;
@@ -22,9 +21,6 @@ export class LoginComponent {
     private appDBService: AppDBService,
     private userService: UserService
   ) {
-    this.userService.execChange.subscribe((value) => {
-      this.user = value;
-    });
   }
 
   getEmailErrorMessage() {

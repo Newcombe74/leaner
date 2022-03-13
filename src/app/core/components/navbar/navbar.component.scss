@@ -1,5 +1,6 @@
 .mat-elevation-z5 {
-  position: relative;
+  position: fixed;
+  top: 0;
   z-index: 100;
 }
 .nav-logo {
@@ -10,4 +11,8 @@
 }
 .spacer {
   flex: 1 1 auto;
+}
+.welcome-message {
+  font-size: 11pt;
+  margin-right: 10px;
 }

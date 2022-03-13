@@ -6,6 +6,7 @@ export interface User {
   lastName: string;
   dob: Date;
   sex: number;
+  healthCardNumber: string;
   email: string;
   password: string;
   phoneNumber: string;
@@ -38,7 +39,7 @@ export class AppDB extends Dexie {
   constructor() {
     super('ngdexieliveQuery');
     this.version(4).stores({
-      users: '++id, firstName, lastName, dob, sex, &email, password, phoneNumber, addressLineOne, addressLineTwo, postcode, emergencyFullName, emergencyPhoneNumber',
+      users: '++id, firstName, lastName, dob, sex, &healthCardNumber, &email, password, phoneNumber, addressLineOne, addressLineTwo, postcode, emergencyFullName, emergencyPhoneNumber',
       waitRequests: '++id, userId, created, done',
       hospitals: '++id, &name, addressLineOne, addressLineTwo, postcode, phoneNumber'
     });
@@ -119,6 +120,7 @@ export class AppDB extends Dexie {
       lastName: 'Smith',
       dob: new Date(),
       sex: 0,
+      healthCardNumber: '0123456789',
       email: 'jsmith@dal.ca',
       password: 'password',
       phoneNumber: '123456789',
