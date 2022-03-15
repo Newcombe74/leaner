@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './core/components/page-not-found/pagenotfound.component';
 import { AboutComponent } from './features/about/about.component';
+import { ERAdmissionComponent } from './features/er-admission/er-admission.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
     { path: 'user-account', component: UserAccountComponent},
+    { path: 'er-admission', component: ERAdmissionComponent},
   
     //Wild Card Route for 404 request
     { path: '**', pathMatch: 'full', 
