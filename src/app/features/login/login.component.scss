@@ -1,20 +1,24 @@
 h1 {
   color: #162B66;
 	font: bold 4em Helvetica, sans-serif;
-  padding-left: 0.5em;
+  padding-left: 5.5em;
   padding-top: 0.5em;
 }
+
+
 
 .container .mat-form-field + .mat-form-field {
     margin-left: 8px;
   }
 
 .container {
-  border: solid red;
+  //border: solid red;
   display: flex;
-  width: 75em;
-  margin: auto;
+  width: 65em;
+  //margin: 0;
   flex-direction: column;
+  height: 20em;
+  
 }
 
 .email {
@@ -23,6 +27,7 @@ h1 {
   //border: solid red;
   width: 25em;
   flex-wrap: wrap;
+  padding-top: 3em;
 }
 
 .password {
@@ -40,7 +45,22 @@ h1 {
 .mat-card {
   width: 60%;
   margin: auto;
-  margin-top: 10em;
+  margin-top: 3em;
 }
 
+.buttons {
+  //border: solid red;
+  margin-left: 20em;
+  width: 25em;
+  display: flex;
+  justify-content: center;
+}
 
+.register {
+  width: 45%;
+}
+
+.login {
+  width: 40%;
+  margin-left: 1em;
+}
