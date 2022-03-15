@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { ToastService } from 'src/app/shared/services/toast.service';
 import { User } from 'src/db/db';
 import { AppDBService } from '../../services/db.service';
 import { isDevMode } from '@angular/core';
+import { ToastService } from 'src/app/shared/services/toast.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -12,10 +13,10 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class NavbarComponent {
   currentUser!: User;
-  user!: User;
   isDevMode = false;
 
   constructor(
+    private router: Router,
     private appDBService: AppDBService,
     private toastService: ToastService,
     private authenticationService: AuthenticationService
@@ -29,7 +30,8 @@ export class NavbarComponent {
 
   logout() {
     this.authenticationService.logout();
-    this.toastService.submitToast('Log Out Successful');
+    this.toastService.submitToast('Logout Successful');
+    this.router.navigate(['/']);
   }
 
   resetDB() {
