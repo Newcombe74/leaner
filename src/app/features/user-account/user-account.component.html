@@ -2,8 +2,8 @@
   <h1>Your Account</h1>
   <mat-tab-group *ngIf="currentUser" mat-align-tabs="center">
     <mat-tab label="Personal Information" #personalInfoTab [disabled]="!personalInfoTab.isActive && isEditing">
-      <form [formGroup]="personalInfoFormGroup">
-        <mat-form-field hintLabel="Max 20 characters" appearance="fill">
+      <form [formGroup]="personalInfoFormGroup" class="personalInfo">
+        <mat-form-field hintLabel="Max 20 characters" appearance="fill" class="firstName">
           <mat-label>First Name</mat-label>
           <input
             matInput
@@ -18,7 +18,7 @@
           >
         </mat-form-field>
 
-        <mat-form-field hintLabel="Max 20 characters" appearance="fill">
+        <mat-form-field hintLabel="Max 20 characters" appearance="fill" class="lastName">
           <mat-label>Last Name</mat-label>
           <input
             matInput
@@ -33,7 +33,7 @@
           >
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="dob">
           <mat-label>Date of Birth</mat-label>
           <input
             matInput
@@ -49,7 +49,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="sex">
           <mat-label>Sex</mat-label>
           <mat-select formControlName="sexCtrl" [disabled]="personalInfoFormGroup.controls['sexCtrl'].disabled" required>
             <mat-option *ngFor="let sex of sexes" [value]="sex.value">
