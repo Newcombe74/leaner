@@ -65,7 +65,7 @@
     </mat-tab>
 
     <mat-tab label="Contact Information" #contactInfoTab [disabled]="!contactInfoTab.isActive && isEditing">
-      <form [formGroup]="contactInfoFormGroup">
+      <form [formGroup]="contactInfoFormGroup" class="contactInfo">
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Ex. pat@example.ca" formControlName="emailCtrl" required />
@@ -125,7 +125,7 @@
     </mat-tab>
 
     <mat-tab label="Emergency Contact Information" #emergInfoTab [disabled]="!emergInfoTab.isActive && isEditing">
-      <form [formGroup]="emergContactFormGroup">
+      <form [formGroup]="emergContactFormGroup" class="emergInfo">
         <mat-form-field hintLabel="Max 40 characters" appearance="fill">
           <mat-label>Full Name</mat-label>
           <input matInput #emergFullNameInput placeholder="Full name" formControlName="emergNameCtrl" maxlength="40"

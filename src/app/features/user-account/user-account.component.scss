@@ -19,7 +19,7 @@ h1 {
   padding-top: 0.5em;
 }
 
-.personalInfo {
+.personalInfo, .contactInfo, .emergInfo {
   margin-left: 10%;
   margin-right: 10%;
   padding-top: 1em;
@@ -28,3 +28,4 @@ h1 {
 .firstName, .lastName, .dob, .sex {
   margin-right: 1em;
 }
+
