@@ -11,6 +11,7 @@
           class="get-started-button"
           mat-raised-button
           color="primary"
+          *ngIf="!currentUser"
           routerLink="/register"
         >
           Get Started
@@ -19,6 +20,7 @@
           class="get-started-button"
           mat-raised-button
           color="primary"
+          *ngIf="currentUser"
           routerLink="/er-admission"
         >
           Get Started
