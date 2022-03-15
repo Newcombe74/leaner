@@ -19,9 +19,15 @@ h1 {
   padding-top: 0.5em;
 }
 
-.personalInfo, .contactInfo, .emergInfo {
+.personalInfo, .contactInfo, {
   margin-left: 10%;
   margin-right: 10%;
+  padding-top: 1em;
+}
+
+.emergInfo {
+  margin-left: 32%;
+  margin-right: 32%;
   padding-top: 1em;
 }
 
