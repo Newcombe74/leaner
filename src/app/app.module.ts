@@ -15,10 +15,11 @@ import { AppDBService } from './core/services/db.service';
 import { ToastComponent } from './shared/components/toast/toast.component';
 import { ToastService } from './shared/services/toast.service';
 import { UserAccountComponent } from './features/user-account/user-account.component';
+import { ERAdmissionComponent } from './features/er-admission/er-admission.component';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, 
-    LoginComponent, RegisterComponent, UserAccountComponent, OnlyNumber, ToastComponent],
+    LoginComponent, RegisterComponent, UserAccountComponent, OnlyNumber, ToastComponent, ERAdmissionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
