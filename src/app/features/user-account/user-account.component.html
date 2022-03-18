@@ -66,13 +66,13 @@
 
     <mat-tab label="Contact Information" #contactInfoTab [disabled]="!contactInfoTab.isActive && isEditing">
       <form [formGroup]="contactInfoFormGroup" class="contactInfo">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="email">
           <mat-label>Email</mat-label>
           <input matInput placeholder="Ex. pat@example.ca" formControlName="emailCtrl" required />
           <mat-error>{{ getEmailErrorMessage() }}</mat-error>
         </mat-form-field>
 
-        <mat-form-field hintLabel="Must be 10 digits" appearance="fill">
+        <mat-form-field hintLabel="Must be 10 digits" appearance="fill" class="phoneNumber">
           <mat-label>Phone Number</mat-label>
           <span matPrefix>+1 &nbsp;</span>
           <input matInput formControlName="phoneNumberCtrl" required minlength="10" maxlength="10"
@@ -80,14 +80,14 @@
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
 
-        <mat-form-field hintLabel="Max 40 characters" appearance="fill">
+        <mat-form-field hintLabel="Max 40 characters" appearance="fill" class="addressLineOne">
           <mat-label>Address Line One</mat-label>
           <input matInput #addressLineOneInput formControlName="addressLineOneCtrl" maxlength="40"
             placeholder="Ex. 1 Spring Garden Road" required />
           <mat-hint align="end">{{ addressLineOneInput.value?.length || 0 }}/40</mat-hint>
         </mat-form-field>
 
-        <mat-form-field hintLabel="Max 20 characters" appearance="fill">
+        <mat-form-field hintLabel="Max 20 characters" appearance="fill" class="addressLineTwo">
           <mat-label>Address Line Two</mat-label>
           <input matInput #addressLineTwoInput formControlName="addressLineTwoCtrl" maxlength="20"
             placeholder="Ex. Halifax" required />
@@ -126,7 +126,7 @@
 
     <mat-tab label="Emergency Contact Information" #emergInfoTab [disabled]="!emergInfoTab.isActive && isEditing">
       <form [formGroup]="emergContactFormGroup" class="emergInfo">
-        <mat-form-field hintLabel="Max 40 characters" appearance="fill">
+        <mat-form-field hintLabel="Max 40 characters" appearance="fill" class="fullName">
           <mat-label>Full Name</mat-label>
           <input matInput #emergFullNameInput placeholder="Full name" formControlName="emergNameCtrl" maxlength="40"
             required />
