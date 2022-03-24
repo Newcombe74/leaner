@@ -19,6 +19,8 @@ import { AppDBService } from './services/db.service';
 import { ToastService } from '../shared/services/toast.service';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -26,7 +28,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatTooltipModule, MatFormFieldModule],
   exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule,
     FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule,
-    MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatSnackBarModule, MatTabsModule],
+    MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatSnackBarModule, MatTabsModule,
+    MatChipsModule, MatAutocompleteModule],
   providers: [AppDBService, ToastService],
   bootstrap: [NavbarComponent],
 })
