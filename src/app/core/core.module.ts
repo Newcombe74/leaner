@@ -21,6 +21,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [NavbarComponent],
@@ -29,7 +30,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
   exports: [NavbarComponent, MatIconModule, MatButtonModule, MatTooltipModule, MatFormFieldModule,
     FormsModule, ReactiveFormsModule, MatInputModule, MatCardModule, MatStepperModule,
     MatDatepickerModule, MatSelectModule, MatNativeDateModule, MatSnackBarModule, MatTabsModule,
-    MatChipsModule, MatAutocompleteModule],
+    MatChipsModule, MatAutocompleteModule, MatProgressSpinnerModule],
   providers: [AppDBService, ToastService],
   bootstrap: [NavbarComponent],
 })
