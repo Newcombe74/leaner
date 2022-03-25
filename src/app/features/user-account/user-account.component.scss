@@ -13,14 +13,27 @@
 }
 
 h1 {
-  color: #162B66;
-	font: bold 4em Helvetica, sans-serif;
+  color: #162b66;
+  font: bold 4em Helvetica, sans-serif;
   margin-right: 35%;
   margin-left: 35%;
   padding-top: 0.5em;
 }
 
-.personalInfo, .contactInfo {
+mat-card {
+  width: 80%;
+  margin: 50px auto auto auto;
+}
+
+.userForms {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  mat-form-field {
+    width: 40%;
+  }
+
   margin-left: 10%;
   margin-right: 10%;
   padding-top: 1em;
@@ -32,7 +45,14 @@ h1 {
   padding-top: 1em;
 }
 
-.firstName, .lastName, .dob, .sex, .email, .phoneNumber, .addressLineOne, .addressLineTwo, .fullName {
+.firstName,
+.lastName,
+.dob,
+.sex,
+.email,
+.phoneNumber,
+.addressLineOne,
+.addressLineTwo,
+.fullName {
   margin-right: 1em;
 }
-
