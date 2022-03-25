@@ -1,0 +1,115 @@
+<div class="page-container">
+  <mat-card>
+    <h1>ER Admission</h1>
+    <mat-stepper orientation="horizontal" [linear]="true" #stepper>
+      <mat-step [stepControl]="admissionFormGroup">
+        <form [formGroup]="admissionFormGroup" class="admissionForm">
+          <ng-template matStepLabel>Admission Information</ng-template>
+
+          <mat-form-field
+            class="symptomsInput"
+            hintLabel="Not Required"
+            appearance="fill"
+          >
+            <mat-label>Symptoms</mat-label>
+            <mat-chip-list #chipList aria-label="Symptoms selection">
+              <mat-chip
+                *ngFor="let symptom of symptomsList"
+                (removed)="removeSymptom(symptom)"
+              >
+                {{ symptom }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input
+                placeholder="New symptom..."
+                #symptomInput
+                formControlName="symptomsCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addSymptom($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              (optionSelected)="selectedSymptom($event)"
+            >
+              <mat-option
+                *ngFor="let symptom of filteredSymptoms | async"
+                [value]="symptom"
+              >
+                {{ symptom }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <div class="bloodPressureInputs">
+            <mat-form-field hintLabel="Not Required" appearance="fill">
+              <mat-label>Systolic Blood Pressure</mat-label>
+              <input
+                matInput
+                formControlName="sysBPCtrl"
+                maxlength="3"
+                [OnlyNumber]="true"
+              />
+              <span matSuffix>mmHg</span>
+            </mat-form-field>
+
+            <mat-form-field hintLabel="Not Required" appearance="fill">
+              <mat-label>Diastolic Blood Pressure</mat-label>
+              <input
+                matInput
+                formControlName="diaBPCtrl"
+                maxlength="3"
+                [OnlyNumber]="true"
+              />
+              <span matSuffix>mmHg</span>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field hintLabel="Not Required" appearance="fill">
+            <mat-label>Heart Rate</mat-label>
+            <input
+              matInput
+              formControlName="heartRateCtrl"
+              maxlength="3"
+              [OnlyNumber]="true"
+            />
+            <span matSuffix>bpm</span>
+          </mat-form-field>
+
+          <mat-form-field class="notesInput" hintLabel="Not Required" appearance="fill">
+            <mat-label>Notes</mat-label>
+            <textarea
+              matInput
+              #notesInput
+              formControlName="notesCtrl"
+              maxlength="250"
+            ></textarea>
+            <mat-hint align="end"
+              >{{ notesInput.value?.length || 0 }}/250</mat-hint
+            >
+          </mat-form-field>
+
+          <div>
+            <button mat-button matStepperNext>Submit</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>ER Selection</ng-template>
+        <mat-spinner></mat-spinner>
+
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div></div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card>
+</div>

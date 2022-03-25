@@ -11,3 +11,28 @@
   justify-content: center;
   width: 120px;
 }
+
+h1 {
+  color: #162B66;
+	font: bold 4em Helvetica, sans-serif;
+  margin-right: 35%;
+  margin-left: 35%;
+  padding-top: 0.5em;
+}
+
+.personalInfo, .contactInfo {
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 1em;
+}
+
+.emergInfo {
+  margin-left: 32%;
+  margin-right: 32%;
+  padding-top: 1em;
+}
+
+.firstName, .lastName, .dob, .sex, .email, .phoneNumber, .addressLineOne, .addressLineTwo, .fullName {
+  margin-right: 1em;
+}
+

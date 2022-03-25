@@ -1,0 +1,43 @@
+h1 {
+  color: #162b66;
+  font: bold 4em Helvetica, sans-serif;
+  padding-left: 0.5em;
+  padding-top: 0.5em;
+}
+
+mat-card {
+    width: 80%;
+    margin: 100px auto auto auto;
+}
+
+.admissionForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  mat-form-field {
+      margin-bottom: 10px;
+  }
+}
+
+.symptomsInput {
+    width: 50%;
+}
+
+.bloodPressureInputs {
+    display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  mat-form-field {
+      margin-right: 10px;
+  }
+}
+
+.notesInput {
+    width: 50%;
+}
+
+mat-spinner {
+    margin: auto;
+}

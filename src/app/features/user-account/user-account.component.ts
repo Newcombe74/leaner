@@ -20,7 +20,7 @@ import { User } from 'src/db/db';
 })
 export class UserAccountComponent {
   currentUser!: User;
-  
+
   isLoaded = false;
   isEditing = false;
 
@@ -36,6 +36,7 @@ export class UserAccountComponent {
   hideNewPassword = true;
   hideConfirmPassword = true;
   matcher = new LeanERErrorStateMatcher();
+  passwordFailed = false;
 
   sexes = [
     { value: 0, viewValue: 'Male' },
@@ -61,27 +62,27 @@ export class UserAccountComponent {
   ngOnInit() {
     let user = this.currentUser;
     this.personalInfoFormGroup = this._formBuilder.group({
-      firstNameCtrl: [{value: user.firstName, disabled: true}, Validators.required],
-      lastNameCtrl: [{value: user.lastName, disabled: true}, Validators.required],
-      dobCtrl: [{value: user.dob, disabled: true}, Validators.required],
-      sexCtrl: [{value: user.sex, disabled: true}, Validators.required],
-      healthCardNumberCtrl: [{value: user.healthCardNumber, disabled: true}, Validators.required],
+      firstNameCtrl: [{ value: user.firstName, disabled: true }, Validators.required],
+      lastNameCtrl: [{ value: user.lastName, disabled: true }, Validators.required],
+      dobCtrl: [{ value: user.dob, disabled: true }, Validators.required],
+      sexCtrl: [{ value: user.sex, disabled: true }, Validators.required],
+      healthCardNumberCtrl: [{ value: user.healthCardNumber, disabled: true }, Validators.required],
     });
     this.contactInfoFormGroup = this._formBuilder.group({
-      emailCtrl: [{value: user.email, disabled: true}, [Validators.required, Validators.email]],
-      phoneNumberCtrl: [{value: user.phoneNumber, disabled: true}, Validators.required],
-      addressLineOneCtrl: [{value: user.addressLineOne, disabled: true}, Validators.required],
-      addressLineTwoCtrl: [{value: user.addressLineTwo, disabled: true}, Validators.required],
-      postcodeCtrl: [{value: user.postcode, disabled: true}, Validators.required],
+      emailCtrl: [{ value: user.email, disabled: true }, [Validators.required, Validators.email]],
+      phoneNumberCtrl: [{ value: user.phoneNumber, disabled: true }, Validators.required],
+      addressLineOneCtrl: [{ value: user.addressLineOne, disabled: true }, Validators.required],
+      addressLineTwoCtrl: [{ value: user.addressLineTwo, disabled: true }, Validators.required],
+      postcodeCtrl: [{ value: user.postcode, disabled: true }, Validators.required],
     });
     this.emergContactFormGroup = this._formBuilder.group({
-      emergNameCtrl: [{value: user.emergencyFullName, disabled: true}, Validators.required],
-      emergPhoneNumberCtrl: [{value: user.emergencyPhoneNumber, disabled: true}, Validators.required],
+      emergNameCtrl: [{ value: user.emergencyFullName, disabled: true }, Validators.required],
+      emergPhoneNumberCtrl: [{ value: user.emergencyPhoneNumber, disabled: true }, Validators.required],
     });
     this.passwordFormGroup = this._formBuilder.group(
       {
+        passwordOldCtrl: ['', Validators.required],
         passwordCtrl: ['', Validators.required],
-        passwordNewCtrl: ['', Validators.required],
         passwordConfirmCtrl: ['', Validators.required],
       },
       { validators: this.checkPasswords }
@@ -115,12 +116,48 @@ export class UserAccountComponent {
     let response = await this.appDBService.updateUser(user);
 
     // Handle DB Response
-    if(response.status === 0) {
+    if (response.status === 0) {
       this.toastService.submitToast('Update Successful');
-      
+
       this.authenticationService.login(response.user);
 
       this.cancelEditing();
+    }
+  }
+
+  async attemptUpdatePassword() {
+    // Populate user object
+    let passwordCtrls = this.passwordFormGroup.controls;
+    let user: User = this.currentUser;
+
+    let oldPassword = passwordCtrls['passwordOldCtrl'].value;
+    let newPassword = passwordCtrls['passwordCtrl'].value;
+
+    if (oldPassword === user.password) {
+      // Set new password
+      user.password = newPassword;
+
+      // Update DB
+      let response = await this.appDBService.updateUser(user);
+
+      // Handle DB Response
+      if (response.status === 0) {
+        this.toastService.submitToast('Update Password Successful');
+        this.passwordFailed = false;
+
+        this.authenticationService.login(response.user);
+
+        this.passwordFormGroup = this._formBuilder.group(
+          {
+            passwordOldCtrl: ['', Validators.required],
+            passwordCtrl: ['', Validators.required],
+            passwordConfirmCtrl: ['', Validators.required],
+          },
+          { validators: this.checkPasswords }
+        );
+      }
+    } else {
+      this.passwordFailed = true;
     }
   }
 
@@ -137,22 +174,22 @@ export class UserAccountComponent {
 
     let user = this.currentUser;
     this.personalInfoFormGroup = this._formBuilder.group({
-      firstNameCtrl: [{value: user.firstName, disabled: true}, Validators.required],
-      lastNameCtrl: [{value: user.lastName, disabled: true}, Validators.required],
-      dobCtrl: [{value: user.dob, disabled: true}, Validators.required],
-      sexCtrl: [{value: user.sex, disabled: true}, Validators.required],
-      healthCardNumberCtrl: [{value: user.healthCardNumber, disabled: true}, Validators.required],
+      firstNameCtrl: [{ value: user.firstName, disabled: true }, Validators.required],
+      lastNameCtrl: [{ value: user.lastName, disabled: true }, Validators.required],
+      dobCtrl: [{ value: user.dob, disabled: true }, Validators.required],
+      sexCtrl: [{ value: user.sex, disabled: true }, Validators.required],
+      healthCardNumberCtrl: [{ value: user.healthCardNumber, disabled: true }, Validators.required],
     });
     this.contactInfoFormGroup = this._formBuilder.group({
-      emailCtrl: [{value: user.email, disabled: true}, [Validators.required, Validators.email]],
-      phoneNumberCtrl: [{value: user.phoneNumber, disabled: true}, Validators.required],
-      addressLineOneCtrl: [{value: user.addressLineOne, disabled: true}, Validators.required],
-      addressLineTwoCtrl: [{value: user.addressLineTwo, disabled: true}, Validators.required],
-      postcodeCtrl: [{value: user.postcode, disabled: true}, Validators.required],
+      emailCtrl: [{ value: user.email, disabled: true }, [Validators.required, Validators.email]],
+      phoneNumberCtrl: [{ value: user.phoneNumber, disabled: true }, Validators.required],
+      addressLineOneCtrl: [{ value: user.addressLineOne, disabled: true }, Validators.required],
+      addressLineTwoCtrl: [{ value: user.addressLineTwo, disabled: true }, Validators.required],
+      postcodeCtrl: [{ value: user.postcode, disabled: true }, Validators.required],
     });
     this.emergContactFormGroup = this._formBuilder.group({
-      emergNameCtrl: [{value: user.emergencyFullName, disabled: true}, Validators.required],
-      emergPhoneNumberCtrl: [{value: user.emergencyPhoneNumber, disabled: true}, Validators.required],
+      emergNameCtrl: [{ value: user.emergencyFullName, disabled: true }, Validators.required],
+      emergPhoneNumberCtrl: [{ value: user.emergencyPhoneNumber, disabled: true }, Validators.required],
     });
   }
 
