@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -17,7 +17,9 @@ export class ERAdmissionComponent {
   admissionFormGroup!: FormGroup;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
+
   filteredSymptoms!: Observable<string[]>;
+  symptomsInputCtrl = new FormControl();
   symptomsList: string[] = [];
   allSymptoms: string[] = [
     'Abdominal pain',
@@ -48,8 +50,48 @@ export class ERAdmissionComponent {
     'Urinary problems',
     'Wheezing',
   ];
+  filteredConditions!: Observable<string[]>;
+  conditionsInputCtrl = new FormControl();
+  conditionsList: string[] = [];
+  allConditions: string[] = [
+    'Type I Diabetes',
+    'Type II Diabetes',
+    'Cancer',
+    'Heart Disease',
+    'High Blood Pressure',
+    'Auto Immune Disorder',
+    'Liver Disease',
+    'Allergies',
+    'Anxiety Disorder',
+    'Mood Disorder',
+    'Asthma',
+    'Arthritis',
+    'Kidney Disease',
+    'Dementia',
+    "Alsheimer's",
+    'Pregnancy',
+    'Epilepsy',
+    'Gastrointestinal Disorder',
+    'Gout',
+    'Heart Failure',
+    'High Cholesterol',
+    'Lyme Disease',
+    'Chronic Migraines',
+    'Osteoporosis',
+    'Thyroid Disorder',
+    "Parkinson's",
+    'Addiction',
+    'Psychosis',
+    'Spina Bifida',
+    'Polio',
+    'Anemia',
+    'Sickle Cell Disease',
+    'Ulcers',
+    'Infection',
+  ];
 
   @ViewChild('symptomInput') symptomInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('conditionInput') conditionInput!: ElementRef<HTMLInputElement>;
 
   constructor(
     private router: Router,
@@ -60,7 +102,8 @@ export class ERAdmissionComponent {
 
   ngOnInit() {
     this.admissionFormGroup = this._formBuilder.group({
-      symptomsCtrl: [''],
+      symptomsCtrl: ['', Validators.required],
+      conditionsCtrl: [''],
       sysBPCtrl: [''],
       diaBPCtrl: [''],
       heartRateCtrl: [''],
@@ -72,7 +115,18 @@ export class ERAdmissionComponent {
     ].valueChanges.pipe(
       startWith(null),
       map((symptom: string | null) =>
-        symptom ? this._filter(symptom) : this.allSymptoms.slice()
+        symptom ? this._filterSymptoms(symptom) : this.allSymptoms.slice()
+      )
+    );
+
+    this.filteredConditions = this.admissionFormGroup.controls[
+      'conditionsCtrl'
+    ].valueChanges.pipe(
+      startWith(null),
+      map((condition: string | null) =>
+        condition
+          ? this._filterConditions(condition)
+          : this.allConditions.slice()
       )
     );
   }
@@ -88,7 +142,8 @@ export class ERAdmissionComponent {
     // Clear the input value
     event.chipInput!.clear();
 
-    this.admissionFormGroup.controls['symptomsCtrl'].setValue(null);
+    this.symptomsInputCtrl.setValue(null);
+    this.admissionFormGroup.controls['symptomsCtrl'].setValue(this.symptomsList);
   }
 
   removeSymptom(symptom: string): void {
@@ -96,20 +151,61 @@ export class ERAdmissionComponent {
 
     if (index >= 0) {
       this.symptomsList.splice(index, 1);
+      this.admissionFormGroup.controls['symptomsCtrl'].setValue(this.symptomsList);
     }
   }
 
   selectedSymptom(event: MatAutocompleteSelectedEvent): void {
     this.symptomsList.push(event.option.viewValue);
     this.symptomInput.nativeElement.value = '';
-    this.admissionFormGroup.controls['symptomsCtrl'].setValue(null);
+    this.symptomsInputCtrl.setValue(null);
+    this.admissionFormGroup.controls['symptomsCtrl'].setValue(this.symptomsList);
   }
 
-  private _filter(value: string): string[] {
+  private _filterSymptoms(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.allSymptoms.filter((symptom) =>
       symptom.toLowerCase().includes(filterValue)
+    );
+  }
+
+  addCondition(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our condition
+    if (value) {
+      this.conditionsList.push(value);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+
+    this.conditionsInputCtrl.setValue(null);
+    this.admissionFormGroup.controls['conditionsCtrl'].setValue(this.conditionsList);
+  }
+
+  removeCondition(condition: string): void {
+    const index = this.conditionsList.indexOf(condition);
+
+    if (index >= 0) {
+      this.conditionsList.splice(index, 1);
+      this.admissionFormGroup.controls['conditionsCtrl'].setValue(this.conditionsList);
+    }
+  }
+
+  selectedCondition(event: MatAutocompleteSelectedEvent): void {
+    this.conditionsList.push(event.option.viewValue);
+    this.conditionInput.nativeElement.value = '';
+    this.conditionsInputCtrl.setValue(null);
+    this.admissionFormGroup.controls['conditionsCtrl'].setValue(this.conditionsList);
+  }
+
+  private _filterConditions(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allConditions.filter((condition) =>
+      condition.toLowerCase().includes(filterValue)
     );
   }
 }

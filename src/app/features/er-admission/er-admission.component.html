@@ -8,11 +8,11 @@
 
           <mat-form-field
             class="symptomsInput"
-            hintLabel="Not Required"
+            hintLabel="Required"
             appearance="fill"
           >
             <mat-label>Symptoms</mat-label>
-            <mat-chip-list #chipList aria-label="Symptoms selection">
+            <mat-chip-list #symptomsChipList aria-label="Symptoms selection">
               <mat-chip
                 *ngFor="let symptom of symptomsList"
                 (removed)="removeSymptom(symptom)"
@@ -25,15 +25,16 @@
               <input
                 placeholder="New symptom..."
                 #symptomInput
-                formControlName="symptomsCtrl"
-                [matAutocomplete]="auto"
-                [matChipInputFor]="chipList"
+                [formControl]="symptomsInputCtrl"
+                [matAutocomplete]="symptomsAuto"
+                [matChipInputFor]="symptomsChipList"
                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 (matChipInputTokenEnd)="addSymptom($event)"
+                required
               />
             </mat-chip-list>
             <mat-autocomplete
-              #auto="matAutocomplete"
+              #symptomsAuto="matAutocomplete"
               (optionSelected)="selectedSymptom($event)"
             >
               <mat-option
@@ -41,6 +42,45 @@
                 [value]="symptom"
               >
                 {{ symptom }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field
+            class="conditionsInput"
+            hintLabel="Not Required"
+            appearance="fill"
+          >
+            <mat-label>Known Conditions</mat-label>
+            <mat-chip-list #conditionsChipList aria-label="Conditions selection">
+              <mat-chip
+                *ngFor="let condition of conditionsList"
+                (removed)="removeCondition(condition)"
+              >
+                {{ condition }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip>
+              <input
+                placeholder="New condition..."
+                #conditionInput
+                [formControl]="conditionsInputCtrl"
+                [matAutocomplete]="conditionsAuto"
+                [matChipInputFor]="conditionsChipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="addCondition($event)"
+              />
+            </mat-chip-list>
+            <mat-autocomplete
+              #conditionsAuto="matAutocomplete"
+              (optionSelected)="selectedCondition($event)"
+            >
+              <mat-option
+                *ngFor="let condition of filteredConditions | async"
+                [value]="condition"
+              >
+                {{ condition }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
@@ -81,15 +121,15 @@
           </mat-form-field>
 
           <mat-form-field class="notesInput" hintLabel="Not Required" appearance="fill">
-            <mat-label>Notes</mat-label>
+            <mat-label>Other Information</mat-label>
             <textarea
               matInput
               #notesInput
               formControlName="notesCtrl"
-              maxlength="250"
+              maxlength="500"
             ></textarea>
             <mat-hint align="end"
-              >{{ notesInput.value?.length || 0 }}/250</mat-hint
+              >{{ notesInput.value?.length || 0 }}/500</mat-hint
             >
           </mat-form-field>
 
