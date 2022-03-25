@@ -29,6 +29,7 @@ export interface Hospital {
   addressLineTwo: string;
   postcode: string;
   phoneNumber: string;
+  waitTime?: number;
 }
 
 export class AppDB extends Dexie {

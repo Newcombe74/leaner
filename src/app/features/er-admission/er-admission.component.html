@@ -1,7 +1,7 @@
 <div class="page-container">
-  <mat-card>
+  <mat-card class="main-mat-card">
     <h1>ER Admission</h1>
-    <mat-stepper orientation="horizontal" [linear]="true" #stepper>
+    <mat-stepper orientation="horizontal" [linear]="true" #admissionStepper>
       <mat-step [stepControl]="admissionFormGroup">
         <form [formGroup]="admissionFormGroup" class="admissionForm">
           <ng-template matStepLabel>Admission Information</ng-template>
@@ -134,21 +134,42 @@
           </mat-form-field>
 
           <div>
-            <button mat-button matStepperNext>Submit</button>
+            <button mat-button matStepperNext (click)="submitAdmissionForm()">Submit</button>
           </div>
         </form>
       </mat-step>
 
       <mat-step>
         <ng-template matStepLabel>ER Selection</ng-template>
-        <mat-spinner></mat-spinner>
+        <mat-spinner *ngIf="loadingWaitTimes"></mat-spinner>
+        <mat-grid-list *ngIf="!loadingWaitTimes" cols="3" rowHeight="1:1">
+          <ng-container *ngFor="let item of hospitals">
+              <mat-grid-tile>
+                <mat-card>
+                  <h2>{{ item.name }}</h2>
+                  <p>{{ item.addressLineOne }}</p>
+                  <p>{{ item.addressLineTwo }}</p>
+                  <p>{{ item.postcode }}</p>
+                  <p><b>{{ item.phoneNumber }}</b></p>
+                  <p>Estimated Wait Time: {{ item.waitTime }}hrs</p>
+                  <button mat-raised-button color="primary" (click)="selectER(item)">Select ER</button>
+                </mat-card>
+              </mat-grid-tile>
+          </ng-container>
+      </mat-grid-list>
 
       </mat-step>
 
       <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        <p>You are now done.</p>
-        <div></div>
+        <ng-template matStepLabel>Selected ER</ng-template>
+        <mat-card *ngIf="selectedHospital">
+          <h2>{{ selectedHospital.name }}</h2>
+          <p>{{ selectedHospital.addressLineOne }}</p>
+          <p>{{ selectedHospital.addressLineTwo }}</p>
+          <p>{{ selectedHospital.postcode }}</p>
+          <p><b>{{ selectedHospital.phoneNumber }}</b></p>
+          <p>Estimated Wait Time: {{ selectedHospital.waitTime }}Hrs</p>
+        </mat-card>
       </mat-step>
     </mat-stepper>
   </mat-card>

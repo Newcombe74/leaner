@@ -1,5 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -7,6 +12,8 @@ import { Observable, startWith, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { AppDBService } from 'src/app/core/services/db.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { MatStepper } from '@angular/material/stepper';
+import { Hospital } from 'src/db/db';
 
 @Component({
   selector: 'er-admission',
@@ -15,6 +22,11 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 })
 export class ERAdmissionComponent {
   admissionFormGroup!: FormGroup;
+
+  loadingWaitTimes = true;
+
+  hospitals: Hospital[] = [];
+  selectedHospital!: Hospital;
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -92,6 +104,7 @@ export class ERAdmissionComponent {
 
   @ViewChild('symptomInput') symptomInput!: ElementRef<HTMLInputElement>;
   @ViewChild('conditionInput') conditionInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('admissionStepper') admissionStepper!: MatStepper;
 
   constructor(
     private router: Router,
@@ -131,6 +144,29 @@ export class ERAdmissionComponent {
     );
   }
 
+  async submitAdmissionForm() {
+    if (this.admissionFormGroup.valid) {
+      this.loadingWaitTimes = true;
+
+      this.toastService.submitToast('Admission Form Submitted');
+
+      let response = await this.appDBService.getHospitalsWaitTimeUser();
+
+      if (response.status === 0) {
+        this.hospitals = response.hospitals;
+
+        await new Promise(r => setTimeout(r, 3000));
+
+        this.loadingWaitTimes = false;
+      }
+    }
+  }
+
+  selectER(selectedHospital: Hospital) {
+    this.selectedHospital = selectedHospital;
+    this.admissionStepper.next();
+  }
+
   addSymptom(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
@@ -143,7 +179,9 @@ export class ERAdmissionComponent {
     event.chipInput!.clear();
 
     this.symptomsInputCtrl.setValue(null);
-    this.admissionFormGroup.controls['symptomsCtrl'].setValue(this.symptomsList);
+    this.admissionFormGroup.controls['symptomsCtrl'].setValue(
+      this.symptomsList
+    );
   }
 
   removeSymptom(symptom: string): void {
@@ -151,7 +189,9 @@ export class ERAdmissionComponent {
 
     if (index >= 0) {
       this.symptomsList.splice(index, 1);
-      this.admissionFormGroup.controls['symptomsCtrl'].setValue(this.symptomsList);
+      this.admissionFormGroup.controls['symptomsCtrl'].setValue(
+        this.symptomsList
+      );
     }
   }
 
@@ -159,7 +199,9 @@ export class ERAdmissionComponent {
     this.symptomsList.push(event.option.viewValue);
     this.symptomInput.nativeElement.value = '';
     this.symptomsInputCtrl.setValue(null);
-    this.admissionFormGroup.controls['symptomsCtrl'].setValue(this.symptomsList);
+    this.admissionFormGroup.controls['symptomsCtrl'].setValue(
+      this.symptomsList
+    );
   }
 
   private _filterSymptoms(value: string): string[] {
@@ -182,7 +224,9 @@ export class ERAdmissionComponent {
     event.chipInput!.clear();
 
     this.conditionsInputCtrl.setValue(null);
-    this.admissionFormGroup.controls['conditionsCtrl'].setValue(this.conditionsList);
+    this.admissionFormGroup.controls['conditionsCtrl'].setValue(
+      this.conditionsList
+    );
   }
 
   removeCondition(condition: string): void {
@@ -190,7 +234,9 @@ export class ERAdmissionComponent {
 
     if (index >= 0) {
       this.conditionsList.splice(index, 1);
-      this.admissionFormGroup.controls['conditionsCtrl'].setValue(this.conditionsList);
+      this.admissionFormGroup.controls['conditionsCtrl'].setValue(
+        this.conditionsList
+      );
     }
   }
 
@@ -198,7 +244,9 @@ export class ERAdmissionComponent {
     this.conditionsList.push(event.option.viewValue);
     this.conditionInput.nativeElement.value = '';
     this.conditionsInputCtrl.setValue(null);
-    this.admissionFormGroup.controls['conditionsCtrl'].setValue(this.conditionsList);
+    this.admissionFormGroup.controls['conditionsCtrl'].setValue(
+      this.conditionsList
+    );
   }
 
   private _filterConditions(value: string): string[] {

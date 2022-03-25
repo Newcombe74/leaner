@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AppDB, db, User } from 'src/db/db';
+import { AppDB, db, Hospital, User } from 'src/db/db';
 
 export interface LoginResponse {
   status: number;
@@ -17,6 +17,12 @@ export interface RegisterResponse {
 export interface UpdateResponse {
   status: number;
   user: User;
+  message?: string;
+}
+
+export interface HospitalsWaitTimeResponse {
+  status: number;
+  hospitals: Hospital[];
   message?: string;
 }
 
@@ -55,6 +61,16 @@ export class AppDBService {
   async registerUser(user: User): Promise<RegisterResponse> {
     user.id = await this.db.users.add(user);
     return { status: 0, user };
+  }
+
+  async getHospitalsWaitTimeUser(admssionInfo?: any): Promise<HospitalsWaitTimeResponse> {
+    let hospitals = await this.db.hospitals.toArray();
+
+    hospitals.forEach(hospital => {
+
+      hospital.waitTime = Math.floor(Math.random() * (8 - 2 + 1) + 2);
+    });
+    return { status: 0, hospitals };
   }
 
   async updateUser(user: User): Promise<UpdateResponse> {
