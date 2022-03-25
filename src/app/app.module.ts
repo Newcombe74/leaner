@@ -16,9 +16,10 @@ import { ToastComponent } from './shared/components/toast/toast.component';
 import { ToastService } from './shared/services/toast.service';
 import { UserAccountComponent } from './features/user-account/user-account.component';
 import { ERAdmissionComponent } from './features/er-admission/er-admission.component';
+import { PrivacyStatementComponent } from './features/privacy-statement/privacy-statement.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, ResourcesComponent, 
+  declarations: [AppComponent, HomeComponent, AboutComponent, PrivacyStatementComponent, ResourcesComponent, 
     LoginComponent, RegisterComponent, UserAccountComponent, OnlyNumber, ToastComponent, ERAdmissionComponent],
   imports: [
     BrowserModule,

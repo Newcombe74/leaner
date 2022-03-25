@@ -5,6 +5,7 @@ import { AboutComponent } from './features/about/about.component';
 import { ERAdmissionComponent } from './features/er-admission/er-admission.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
+import { PrivacyStatementComponent } from './features/privacy-statement/privacy-statement.component';
 import { RegisterComponent } from './features/register/register.component';
 import { ResourcesComponent } from './features/resources/resources.component';
 import { UserAccountComponent } from './features/user-account/user-account.component';
@@ -12,6 +13,7 @@ import { UserAccountComponent } from './features/user-account/user-account.compo
 const routes: Routes = [
     { path: '', component: HomeComponent},
     { path: 'about', component: AboutComponent},
+    { path: 'privacy-statement', component: PrivacyStatementComponent},
     { path: 'resources', component: ResourcesComponent},
     { path: 'login', component: LoginComponent},
     { path: 'register', component: RegisterComponent},
