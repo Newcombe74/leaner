@@ -2,7 +2,7 @@
   <mat-card class="main-mat-card">
     <h1>ER Admission</h1>
     <mat-stepper orientation="horizontal" [linear]="true" #admissionStepper>
-      <mat-step [stepControl]="admissionFormGroup">
+      <mat-step [stepControl]="admissionFormGroup" [editable]="!erSelected">
         <form [formGroup]="admissionFormGroup" class="admissionForm">
           <ng-template matStepLabel>Admission Information</ng-template>
 
@@ -139,7 +139,7 @@
         </form>
       </mat-step>
 
-      <mat-step>
+      <mat-step [stepControl]="hospitalFormGroup" [editable]="!erSelected">
         <ng-template matStepLabel>ER Selection</ng-template>
         <mat-spinner *ngIf="loadingWaitTimes"></mat-spinner>
         <mat-grid-list *ngIf="!loadingWaitTimes" cols="3" rowHeight="1:1">
