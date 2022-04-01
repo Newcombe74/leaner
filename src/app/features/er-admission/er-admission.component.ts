@@ -22,8 +22,11 @@ import { Hospital } from 'src/db/db';
 })
 export class ERAdmissionComponent {
   admissionFormGroup!: FormGroup;
+  hospitalFormGroup!: FormGroup;
 
+  erSelected = false;
   loadingWaitTimes = true;
+  requestingER = true;
 
   hospitals: Hospital[] = [];
   selectedHospital!: Hospital;
@@ -123,6 +126,10 @@ export class ERAdmissionComponent {
       notesCtrl: [''],
     });
 
+    this.hospitalFormGroup = this._formBuilder.group({
+      hospitalCtrl: ['', Validators.required],
+    });
+
     this.filteredSymptoms = this.admissionFormGroup.controls[
       'symptomsCtrl'
     ].valueChanges.pipe(
@@ -155,16 +162,25 @@ export class ERAdmissionComponent {
       if (response.status === 0) {
         this.hospitals = response.hospitals;
 
-        await new Promise(r => setTimeout(r, 3000));
+        // sort hospitals by waittime
+        this.hospitals.sort((a, b) => a.waitTime! - b.waitTime!);
 
+        await new Promise((r) => setTimeout(r, 3000));
         this.loadingWaitTimes = false;
       }
     }
   }
 
-  selectER(selectedHospital: Hospital) {
+  async selectER(selectedHospital: Hospital) {
+    this.requestingER = true;
+    this.erSelected = true;
+    this.hospitalFormGroup.controls['hospitalCtrl'].setValue(selectedHospital);
     this.selectedHospital = selectedHospital;
+    this.toastService.submitToast('ER wait request submitted');
     this.admissionStepper.next();
+
+    await new Promise((r) => setTimeout(r, 3000));
+    this.requestingER = false;
   }
 
   addSymptom(event: MatChipInputEvent): void {

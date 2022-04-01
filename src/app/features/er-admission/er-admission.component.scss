@@ -6,8 +6,8 @@ h1 {
 }
 
 .main-mat-card {
-    width: 80%;
-    margin: 100px auto auto auto;
+  width: 80%;
+  margin: 100px auto auto auto;
 }
 
 .admissionForm {
@@ -16,31 +16,98 @@ h1 {
   align-items: flex-start;
 
   mat-form-field {
-      margin-bottom: 10px;
+    margin-bottom: 10px;
   }
 }
 
 .symptomsInput {
-    width: 50%;
+  width: 50%;
 }
 .conditionsInput {
-    width: 50%;
+  width: 50%;
 }
 
 .bloodPressureInputs {
-    display: flex;
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
 
   mat-form-field {
-      margin-right: 10px;
+    margin-right: 10px;
   }
 }
 
 .notesInput {
-    width: 50%;
+  width: 50%;
 }
 
 mat-spinner {
-    margin: auto;
+  margin: auto;
+}
+
+.er-grid-card {
+  width: 100%;
+  margin: 2em 2em 2em 2em;
+
+  .er-info-container {
+    width: 100%;
+
+    .er-contact {
+      float: left;
+      margin-left: 0;
+    }
+
+    .er-waittime {
+      float: right;
+      margin-right: 0;
+    }
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.er-selected-card {
+  width: 60%;
+  margin: 2em auto 2em auto;
+
+  .er-info-container {
+    width: 80%;
+
+    .er-contact {
+      float: left;
+    }
+
+    .er-waittime {
+      float: right;
+    }
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.waittime {
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+
+  background: #fff;
+  border: 2px solid #666;
+  color: #666;
+  text-align: center;
+
+  font: 32px Arial, sans-serif;
+}
+
+.notification-info-header {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  text-align: center;
 }
