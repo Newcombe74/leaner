@@ -130,18 +130,14 @@ export class ERAdmissionComponent {
       hospitalCtrl: ['', Validators.required],
     });
 
-    this.filteredSymptoms = this.admissionFormGroup.controls[
-      'symptomsCtrl'
-    ].valueChanges.pipe(
+    this.filteredSymptoms = this.symptomsInputCtrl.valueChanges.pipe(
       startWith(null),
       map((symptom: string | null) =>
         symptom ? this._filterSymptoms(symptom) : this.allSymptoms.slice()
       )
     );
 
-    this.filteredConditions = this.admissionFormGroup.controls[
-      'conditionsCtrl'
-    ].valueChanges.pipe(
+    this.filteredConditions = this.conditionsInputCtrl.valueChanges.pipe(
       startWith(null),
       map((condition: string | null) =>
         condition
