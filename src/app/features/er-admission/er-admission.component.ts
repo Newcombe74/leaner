@@ -26,6 +26,7 @@ export class ERAdmissionComponent {
 
   erSelected = false;
   loadingWaitTimes = true;
+  requestingER = true;
 
   hospitals: Hospital[] = [];
   selectedHospital!: Hospital;
@@ -164,18 +165,22 @@ export class ERAdmissionComponent {
         // sort hospitals by waittime
         this.hospitals.sort((a, b) => a.waitTime! - b.waitTime!);
 
-        await new Promise(r => setTimeout(r, 3000));
-
+        await new Promise((r) => setTimeout(r, 3000));
         this.loadingWaitTimes = false;
       }
     }
   }
 
-  selectER(selectedHospital: Hospital) {
+  async selectER(selectedHospital: Hospital) {
+    this.requestingER = true;
     this.erSelected = true;
     this.hospitalFormGroup.controls['hospitalCtrl'].setValue(selectedHospital);
     this.selectedHospital = selectedHospital;
+    this.toastService.submitToast('ER wait request submitted');
     this.admissionStepper.next();
+
+    await new Promise((r) => setTimeout(r, 3000));
+    this.requestingER = false;
   }
 
   addSymptom(event: MatChipInputEvent): void {

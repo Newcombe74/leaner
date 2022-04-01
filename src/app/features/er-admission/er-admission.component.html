@@ -52,7 +52,10 @@
             appearance="fill"
           >
             <mat-label>Known Conditions</mat-label>
-            <mat-chip-list #conditionsChipList aria-label="Conditions selection">
+            <mat-chip-list
+              #conditionsChipList
+              aria-label="Conditions selection"
+            >
               <mat-chip
                 *ngFor="let condition of conditionsList"
                 (removed)="removeCondition(condition)"
@@ -120,7 +123,11 @@
             <span matSuffix>bpm</span>
           </mat-form-field>
 
-          <mat-form-field class="notesInput" hintLabel="Not Required" appearance="fill">
+          <mat-form-field
+            class="notesInput"
+            hintLabel="Not Required"
+            appearance="fill"
+          >
             <mat-label>Other Information</mat-label>
             <textarea
               matInput
@@ -134,7 +141,9 @@
           </mat-form-field>
 
           <div>
-            <button mat-button matStepperNext (click)="submitAdmissionForm()">Submit</button>
+            <button mat-button matStepperNext (click)="submitAdmissionForm()">
+              Submit
+            </button>
           </div>
         </form>
       </mat-step>
@@ -142,34 +151,65 @@
       <mat-step [stepControl]="hospitalFormGroup" [editable]="!erSelected">
         <ng-template matStepLabel>ER Selection</ng-template>
         <mat-spinner *ngIf="loadingWaitTimes"></mat-spinner>
-        <mat-grid-list *ngIf="!loadingWaitTimes" cols="3" rowHeight="1:1">
+        <mat-grid-list *ngIf="!loadingWaitTimes" cols="3" rowHeight="1.6:1">
           <ng-container *ngFor="let item of hospitals">
-              <mat-grid-tile>
-                <mat-card>
-                  <h2>{{ item.name }}</h2>
-                  <p>{{ item.addressLineOne }}</p>
-                  <p>{{ item.addressLineTwo }}</p>
-                  <p>{{ item.postcode }}</p>
-                  <p><b>{{ item.phoneNumber }}</b></p>
-                  <p>Estimated Wait Time: {{ item.waitTime }}hrs</p>
-                  <button mat-raised-button color="primary" (click)="selectER(item)">Select ER</button>
-                </mat-card>
-              </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-card class="er-grid-card">
+                <h2>{{ item.name }}</h2>
+                <div class="er-info-container">
+                  <div class="er-contact">
+                    <p>{{ item.addressLineOne }}</p>
+                    <p>{{ item.addressLineTwo }}</p>
+                    <p>{{ item.postcode }}</p>
+                    <p>
+                      Tel: <b>{{ item.phoneNumber }}</b>
+                    </p>
+                  </div>
+                  <div class="er-waittime">
+                    <p>Estimated Wait Time (in hours):</p>
+                    <div class="waittime">{{ item.waitTime }}</div>
+                  </div>
+                </div>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="selectER(item)"
+                >
+                  Select ER
+                </button>
+              </mat-card>
+            </mat-grid-tile>
           </ng-container>
-      </mat-grid-list>
-
+        </mat-grid-list>
       </mat-step>
 
       <mat-step>
         <ng-template matStepLabel>Selected ER</ng-template>
-        <mat-card *ngIf="selectedHospital">
-          <h2>{{ selectedHospital.name }}</h2>
-          <p>{{ selectedHospital.addressLineOne }}</p>
-          <p>{{ selectedHospital.addressLineTwo }}</p>
-          <p>{{ selectedHospital.postcode }}</p>
-          <p><b>{{ selectedHospital.phoneNumber }}</b></p>
-          <p>Estimated Wait Time: {{ selectedHospital.waitTime }}Hrs</p>
-        </mat-card>
+        <mat-spinner *ngIf="requestingER"></mat-spinner>
+        <div *ngIf="!requestingER">
+          <h2>You are now in the queue for the following ER:</h2>
+          <mat-card class="er-selected-card" *ngIf="selectedHospital">
+            <h2>{{ selectedHospital.name }}</h2>
+            <div class="er-info-container">
+              <div class="er-contact">
+                <p>{{ selectedHospital.addressLineOne }}</p>
+                <p>{{ selectedHospital.addressLineTwo }}</p>
+                <p>{{ selectedHospital.postcode }}</p>
+                <p>
+                  Tel: <b>{{ selectedHospital.phoneNumber }}</b>
+                </p>
+              </div>
+              <div class="er-waittime">
+                <p>Estimated Wait Time (in hours):</p>
+                <div class="waittime">{{ selectedHospital.waitTime }}</div>
+              </div>
+            </div>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </mat-card>
+          <h2 class="notification-info-header">
+            You will be notified if the estimated wait time changes
+          </h2>
+        </div>
       </mat-step>
     </mat-stepper>
   </mat-card>
