@@ -161,6 +161,9 @@ export class ERAdmissionComponent {
       if (response.status === 0) {
         this.hospitals = response.hospitals;
 
+        // sort hospitals by waittime
+        this.hospitals.sort((a, b) => a.waitTime! - b.waitTime!);
+
         await new Promise(r => setTimeout(r, 3000));
 
         this.loadingWaitTimes = false;
